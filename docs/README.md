@@ -66,14 +66,39 @@ Comprehensive example code demonstrating:
 14. Pattern creation
 15. Complex assemblies with constraints
 
+### [PROJECT_SUMMARY.md](./PROJECT_SUMMARY.md)
+Executive summary covering:
+- Project overview and problem statement
+- Key features and capabilities
+- Architecture summary
+- Design principles
+- Technology stack
+- Implementation status
+- Use cases and applications
+- Comparison with alternatives
+- Performance considerations
+- Future enhancements
+- Success metrics
+
+### [DIAGRAMS.md](./DIAGRAMS.md)
+Visual architecture diagrams including:
+- System architecture overview (multi-layer diagram)
+- Data flow diagrams (shape creation and reactive updates)
+- Component interaction diagram
+- Class hierarchy diagram
+- Sequence diagrams for operations
+- Detailed ASCII art representations
+
 ## Quick Start
 
 For new users, we recommend reading the documents in this order:
 
 1. **API_SPECIFICATION.md** - Understand what the library can do
-2. **examples.py** - See practical usage examples
-3. **ARCHITECTURE.md** - Understand how it works internally
-4. **DESIGN_DECISIONS.md** - Learn why design choices were made
+2. **PROJECT_SUMMARY.md** - Get a high-level overview
+3. **examples.py** - See practical usage examples
+4. **ARCHITECTURE.md** - Understand how it works internally
+5. **DIAGRAMS.md** - Visualize the system architecture
+6. **DESIGN_DECISIONS.md** - Learn why design choices were made
 
 ## Contributing
 
