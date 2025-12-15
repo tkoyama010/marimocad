@@ -5,8 +5,16 @@
 [![Build](https://github.com/tkoyama010/marimocad/actions/workflows/build.yml/badge.svg)](https://github.com/tkoyama010/marimocad/actions/workflows/build.yml)
 [![PyPI version](https://badge.fury.io/py/marimocad.svg)](https://badge.fury.io/py/marimocad)
 [![Python versions](https://img.shields.io/pypi/pyversions/marimocad.svg)](https://pypi.org/project/marimocad/)
+[![WASM Demo](https://img.shields.io/badge/WASM-Live%20Demo-blue?logo=webassembly)](https://tkoyama010.github.io/marimocad/)
+[![GitHub Pages](https://img.shields.io/badge/docs-GitHub%20Pages-green?logo=github)](https://tkoyama010.github.io/marimocad/)
 
 CAD tools for marimo notebooks - Interactive 3D modeling and computational geometry.
+
+## 🌐 Try It Online!
+
+**[🚀 Launch WASM Demo](https://tkoyama010.github.io/marimocad/)** - No installation required! Run marimocad directly in your browser.
+
+> **Note:** The WASM demo is a simplified version optimized for browser performance. For full features and 3D rendering, use the desktop version.
 
 ## Status
 
@@ -105,16 +113,30 @@ pre-commit install
 ## Research Documentation
 
 - **[CAD Library Comparison](CAD_LIBRARY_COMPARISON.md)** - Comprehensive evaluation of CAD backends
+- **[WASM Deployment Guide](WASM_DEPLOYMENT.md)** - WebAssembly deployment and browser demos ⭐
 - **[Examples](examples/)** - Proof-of-concept demonstrations
-  - [Build123d POC](examples/build123d_poc.py) - Recommended approach ⭐
+  - [Build123d POC](examples/build123d_poc.py) - Desktop version (recommended) ⭐
+  - [WASM Demo](examples/wasm_demo.py) - Browser version (try online!) 🌐
   - [CadQuery POC](examples/cadquery_poc.py) - Alternative backend
   - [OCP POC](examples/ocp_poc.py) - Educational comparison
 
-## Quick Start (POC)
+## Quick Start
+
+### 🌐 Try Online (No Installation)
+
+**[Launch WASM Demo](https://tkoyama010.github.io/marimocad/)** - Run marimocad in your browser!
+
+### 🖥️ Desktop Version (Full Features)
 
 ```bash
+# Install dependencies
+pip install build123d marimo
+
 # Run the Build123d proof of concept
 marimo edit examples/build123d_poc.py
+
+# Or try the WASM demo locally
+marimo edit examples/wasm_demo.py
 ```
 
 ## Testing

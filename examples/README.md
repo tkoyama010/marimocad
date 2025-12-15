@@ -2,10 +2,40 @@
 
 This directory contains proof-of-concept examples demonstrating the integration of different CAD libraries with Marimo.
 
+## 🌐 Try Online First!
+
+**[Launch WASM Demo](https://tkoyama010.github.io/marimocad/)** - No installation required!
+
 ## Files
 
-### 1. `build123d_poc.py` (RECOMMENDED ⭐)
-Demonstrates Build123d integration with Marimo. This is the **recommended approach** for marimocad.
+### 1. `wasm_demo.py` (🌐 Browser Version)
+WebAssembly-optimized demo that runs entirely in the browser via Pyodide.
+
+**Features:**
+- No installation required
+- Interactive reactive controls
+- Real-time parameter updates
+- Browser-compatible (when OCP.wasm available)
+- Simplified for fast loading
+
+**Try online:**
+- **[Live Demo](https://tkoyama010.github.io/marimocad/)**
+
+**Run locally:**
+```bash
+pip install marimo
+marimo edit wasm_demo.py
+```
+
+**Export to WASM:**
+```bash
+marimo export html-wasm wasm_demo.py -o output --mode run
+```
+
+See [WASM_DEPLOYMENT.md](../WASM_DEPLOYMENT.md) for deployment guide.
+
+### 2. `build123d_poc.py` (🖥️ RECOMMENDED ⭐)
+Demonstrates Build123d integration with Marimo. This is the **recommended approach** for marimocad desktop usage.
 
 **Features:**
 - Parametric box with reactive sliders
@@ -13,6 +43,7 @@ Demonstrates Build123d integration with Marimo. This is the **recommended approa
 - Advanced selectors and filtering
 - Export functionality
 - Context manager API
+- Full 3D rendering support
 
 **To run:**
 ```bash
@@ -20,7 +51,7 @@ pip install build123d marimo
 marimo edit build123d_poc.py
 ```
 
-### 2. `cadquery_poc.py` (Alternative)
+### 3. `cadquery_poc.py` (Alternative)
 Demonstrates CadQuery integration with Marimo. Excellent as a secondary backend option.
 
 **Features:**
@@ -36,7 +67,7 @@ pip install cadquery marimo
 marimo edit cadquery_poc.py
 ```
 
-### 3. `ocp_poc.py` (Educational Only)
+### 4. `ocp_poc.py` (Educational Only)
 Demonstrates direct OCP (OpenCascade) usage. **NOT recommended** for user-facing API.
 
 **Purpose:**

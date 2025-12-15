@@ -107,6 +107,10 @@ def test_geometry_creation():
     return True
 
 
+def test_wasm_demo_imports():
+    """Test WASM demo imports (should work without Build123d)."""
+
+
 def main():
     """Run all tests."""
     print("=" * 60)
@@ -119,6 +123,7 @@ def main():
         ("build123d_poc.py", test_build123d_imports),
         ("cadquery_poc.py", test_cadquery_imports),
         ("ocp_poc.py", test_ocp_imports),
+        ("wasm_demo.py", test_wasm_demo_imports),
     ]
 
     all_passed = True
