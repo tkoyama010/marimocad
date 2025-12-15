@@ -5,7 +5,6 @@ This module provides functions to perform boolean operations such as
 union, difference, and intersection on geometries.
 """
 
-from typing import List, Union
 import cadquery as cq
 
 

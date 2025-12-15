@@ -1,10 +1,11 @@
 """Tests for boolean operations."""
 
-import pytest
 import cadquery as cq
-from marimocad.primitives import box, sphere, cylinder
+import pytest
+
+from marimocad.boolean import difference, intersection, union
+from marimocad.primitives import box, cylinder, sphere
 from marimocad.transforms import translate
-from marimocad.boolean import union, difference, intersection
 
 
 class TestUnion:

@@ -6,6 +6,7 @@ translation, rotation, and scaling operations.
 """
 
 from typing import Tuple
+
 import cadquery as cq
 
 
@@ -115,8 +116,8 @@ def scale(
 
     for solid in solids:
         # Create a transformation matrix for scaling
-        from OCP.gp import gp_GTrsf, gp_Trsf
         from OCP.BRepBuilderAPI import BRepBuilderAPI_GTransform
+        from OCP.gp import gp_GTrsf
 
         # Create a general transformation with scale
         gtrsf = gp_GTrsf()

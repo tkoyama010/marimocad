@@ -1,9 +1,10 @@
 """Tests for transformation operations."""
 
-import pytest
 import cadquery as cq
+import pytest
+
 from marimocad.primitives import box, sphere
-from marimocad.transforms import translate, rotate, scale
+from marimocad.transforms import rotate, scale, translate
 
 
 class TestTranslate:

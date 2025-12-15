@@ -1,9 +1,10 @@
 """Tests for advanced operations."""
 
-import pytest
 import cadquery as cq
-from marimocad.sketch import Sketch
+import pytest
+
 from marimocad.operations import extrude, revolve, sweep
+from marimocad.sketch import Sketch
 
 
 class TestExtrude:
@@ -100,14 +101,15 @@ class TestSweep:
     def test_sweep_basic(self):
         """Test basic sweep operation."""
         profile = Sketch().circle(2)
-        path = cq.Workplane("XZ").lineTo(10, 0).lineTo(20, 5)
+        # Create a proper path with consolidated wire
+        path = cq.Workplane("XZ").moveTo(0, 0).lineTo(10, 0).lineTo(20, 5).consolidateWires()
         result = sweep(profile, path)
         assert isinstance(result, cq.Workplane)
 
     def test_sweep_from_workplane(self):
         """Test sweep with Workplane profile."""
         profile = cq.Workplane("XY").circle(3)
-        path = cq.Workplane("XZ").lineTo(15, 0).lineTo(30, 10)
+        path = cq.Workplane("XZ").moveTo(0, 0).lineTo(15, 0).lineTo(30, 10).consolidateWires()
         result = sweep(profile, path)
         assert isinstance(result, cq.Workplane)
 
@@ -133,6 +135,6 @@ class TestSweep:
     def test_sweep_rectangle_profile(self):
         """Test sweep with rectangle profile."""
         profile = Sketch().rectangle(4, 4)
-        path = cq.Workplane("XZ").lineTo(10, 0).lineTo(20, 0)
+        path = cq.Workplane("XZ").moveTo(0, 0).lineTo(10, 0).lineTo(20, 0).consolidateWires()
         result = sweep(profile, path)
         assert isinstance(result, cq.Workplane)

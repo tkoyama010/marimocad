@@ -5,7 +5,6 @@ This module provides functions to create basic 3D geometric primitives
 such as boxes, spheres, cylinders, cones, and tori.
 """
 
-from typing import Tuple
 import cadquery as cq
 
 
@@ -130,8 +129,8 @@ def cone(
     if radius1 == 0 and radius2 == 0:
         raise ValueError("At least one radius must be positive")
 
-    # Create cone using loft between two circles
-    wp = cq.Workplane("XY")
+    # Create cone by revolving a triangular/trapezoidal profile
+    wp = cq.Workplane("XZ")
 
     # Handle centering
     if centered:
@@ -141,28 +140,19 @@ def cone(
         z1 = 0
         z2 = height
 
-    # Create bottom circle
-    if radius1 > 0:
-        wp = wp.workplane(offset=z1).circle(radius1)
-    else:
-        wp = wp.workplane(offset=z1).center(0, 0)
+    # Build profile points for the cone/frustum
+    if radius1 > 0 and radius2 > 0:
+        # Frustum - trapezoid profile
+        wp = wp.moveTo(0, z1).lineTo(radius1, z1).lineTo(radius2, z2).lineTo(0, z2).close()
+    elif radius1 > 0 and radius2 == 0:
+        # Cone with base at bottom - triangle profile
+        wp = wp.moveTo(0, z1).lineTo(radius1, z1).lineTo(0, z2).close()
+    elif radius1 == 0 and radius2 > 0:
+        # Cone with base at top - triangle profile
+        wp = wp.moveTo(0, z1).lineTo(radius2, z2).lineTo(0, z2).close()
 
-    # Create top circle
-    if radius2 > 0:
-        wp = wp.workplane(offset=height).circle(radius2)
-    else:
-        wp = wp.workplane(offset=height).center(0, 0)
-
-    # Loft between them
-    result = wp.loft()
-
-    # Apply angle if not full
-    if angle < 360:
-        cutting_box = cq.Workplane("XZ").transformed(rotate=(0, 0, angle / 2))
-        cutting_box = cutting_box.rect(radius1 * 3, height * 2).revolve(
-            180 - angle, (0, 0, 0), (0, 0, 1)
-        )
-        result = result.cut(cutting_box)
+    # Revolve around Y axis (since we're in XZ plane)
+    result = wp.revolve(angle, (0, 0, 0), (0, 1, 0))
 
     return result
 
@@ -201,7 +191,8 @@ def torus(
     # Calculate sweep angle
     sweep_angle = angle2 - angle1
 
-    result = wp.revolve(sweep_angle, (0, 0, 0), (0, 0, 1))
+    # Use combine=False and clean=False to avoid issues with partial torus
+    result = wp.revolve(sweep_angle, (0, 0, 0), (0, 0, 1), combine=False, clean=False)
 
     # If we need to rotate to start at angle1
     if angle1 != 0:

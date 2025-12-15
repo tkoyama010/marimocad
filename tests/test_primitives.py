@@ -1,8 +1,9 @@
 """Tests for primitive shape creation."""
 
-import pytest
 import cadquery as cq
-from marimocad.primitives import box, sphere, cylinder, cone, torus
+import pytest
+
+from marimocad.primitives import box, cone, cylinder, sphere, torus
 
 
 class TestBox:

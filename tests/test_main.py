@@ -1,6 +1,5 @@
 """Tests for main module imports."""
 
-import pytest
 
 
 class TestImports:
@@ -8,7 +7,7 @@ class TestImports:
 
     def test_import_primitives(self):
         """Test importing primitive functions."""
-        from marimocad import box, sphere, cylinder, cone, torus
+        from marimocad import box, cone, cylinder, sphere, torus
 
         assert callable(box)
         assert callable(sphere)
@@ -18,7 +17,7 @@ class TestImports:
 
     def test_import_transforms(self):
         """Test importing transform functions."""
-        from marimocad import translate, rotate, scale
+        from marimocad import rotate, scale, translate
 
         assert callable(translate)
         assert callable(rotate)
@@ -26,7 +25,7 @@ class TestImports:
 
     def test_import_boolean(self):
         """Test importing boolean functions."""
-        from marimocad import union, difference, intersection
+        from marimocad import difference, intersection, union
 
         assert callable(union)
         assert callable(difference)
@@ -84,7 +83,7 @@ class TestIntegration:
 
     def test_create_and_transform_box(self):
         """Test creating and transforming a box."""
-        from marimocad import box, translate, rotate
+        from marimocad import box, rotate, translate
 
         box_wp = box(10, 10, 10)
         moved = translate(box_wp, x=5)

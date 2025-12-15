@@ -5,8 +5,10 @@ This module provides functions for extruding, revolving, and sweeping
 2D profiles to create 3D geometries.
 """
 
-from typing import Tuple, Optional, Union
+from typing import Tuple, Union
+
 import cadquery as cq
+
 from marimocad.sketch import Sketch
 
 

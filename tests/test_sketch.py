@@ -1,7 +1,8 @@
 """Tests for Sketch class."""
 
-import pytest
 import cadquery as cq
+import pytest
+
 from marimocad.sketch import Sketch
 
 
@@ -140,7 +141,8 @@ class TestSketchArc:
 
     def test_arc_basic(self):
         """Test basic arc."""
-        sketch = Sketch().arc((10, 10), 5)
+        # Need to move to start point first, and use a radius large enough
+        sketch = Sketch().move_to(0, 0).arc((10, 0), 15)
         assert isinstance(sketch, Sketch)
 
     def test_arc_invalid_radius(self):

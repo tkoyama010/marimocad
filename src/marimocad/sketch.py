@@ -5,7 +5,8 @@ This module provides a Sketch class for creating 2D profiles that can
 be used with extrude, revolve, and sweep operations.
 """
 
-from typing import List, Tuple, Optional
+from typing import Tuple
+
 import cadquery as cq
 
 

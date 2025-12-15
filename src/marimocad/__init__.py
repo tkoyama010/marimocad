@@ -4,11 +4,11 @@ marimocad - A modern CAD library for Python with marimo integration.
 This package provides core CAD functionality for creating and manipulating 3D geometries.
 """
 
-from marimocad.primitives import box, sphere, cylinder, cone, torus
-from marimocad.transforms import translate, rotate, scale
-from marimocad.boolean import union, difference, intersection
-from marimocad.sketch import Sketch
+from marimocad.boolean import difference, intersection, union
 from marimocad.operations import extrude, revolve, sweep
+from marimocad.primitives import box, cone, cylinder, sphere, torus
+from marimocad.sketch import Sketch
+from marimocad.transforms import rotate, scale, translate
 
 __version__ = "0.1.0"
 
