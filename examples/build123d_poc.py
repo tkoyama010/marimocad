@@ -24,8 +24,7 @@ def __():
 @app.cell
 def __():
     from build123d import BuildPart, Box, Hole, Locations, fillet, Axis
-    import math
-    return math,
+    return
 
 
 @app.cell
@@ -169,7 +168,7 @@ def __(
         if edges_to_fillet:
             try:
                 fillet(edges_to_fillet, bracket_thickness.value / 2)
-            except:
+            except Exception:
                 pass  # Some edges might not be filleted
     return (
         base_plate,
