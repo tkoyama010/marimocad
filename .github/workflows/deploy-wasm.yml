@@ -1,0 +1,180 @@
+name: Deploy WASM Demo to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'examples/wasm_demo.py'
+      - '.github/workflows/deploy-wasm.yml'
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install marimo
+        run: |
+          pip install marimo
+
+      - name: Export WASM demo
+        run: |
+          mkdir -p wasm-output
+          marimo export html-wasm examples/wasm_demo.py -o wasm-output --mode run
+          # Rename exported notebook to wasm_demo.html
+          mv wasm-output/index.html wasm-output/wasm_demo.html
+
+      - name: Create index page
+        run: |
+          cat > wasm-output/index.html << 'INDEXEOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>marimocad WASM Demo</title>
+              <style>
+                  body {
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                      max-width: 1200px;
+                      margin: 0 auto;
+                      padding: 40px 20px;
+                      line-height: 1.6;
+                  }
+                  .hero {
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                      color: white;
+                      padding: 60px 40px;
+                      border-radius: 10px;
+                      margin-bottom: 40px;
+                      text-align: center;
+                  }
+                  .demo-button {
+                      display: inline-block;
+                      background-color: #3498db;
+                      color: white;
+                      padding: 15px 30px;
+                      text-decoration: none;
+                      border-radius: 5px;
+                      font-size: 1.1em;
+                      margin-top: 20px;
+                  }
+                  .demo-button:hover {
+                      background-color: #2980b9;
+                  }
+                  .features {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                      gap: 20px;
+                      margin: 40px 0;
+                  }
+                  .feature {
+                      padding: 20px;
+                      border: 1px solid #ddd;
+                      border-radius: 8px;
+                      background: #f9f9f9;
+                  }
+                  .info-box {
+                      background: #e8f4f8;
+                      border-left: 4px solid #3498db;
+                      padding: 15px;
+                      margin: 20px 0;
+                      border-radius: 4px;
+                  }
+                  .warning-box {
+                      background: #fff3cd;
+                      border-left: 4px solid #ffc107;
+                      padding: 15px;
+                      margin: 20px 0;
+                      border-radius: 4px;
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="hero">
+                  <h1>🌐 marimocad WASM Demo</h1>
+                  <p>Interactive CAD modeling in your browser</p>
+                  <p><strong>No installation required!</strong></p>
+                  <a href="wasm_demo.html" class="demo-button">🚀 Launch Demo</a>
+              </div>
+
+              <div class="info-box">
+                  <strong>ℹ️ About This Demo:</strong>
+                  This is a WebAssembly-powered demo of marimocad running entirely in your browser.
+              </div>
+
+              <h2>✨ Features</h2>
+              <div class="features">
+                  <div class="feature">
+                      <h3>🎛️ Interactive Controls</h3>
+                      <p>Adjust parameters with sliders and see results update in real-time.</p>
+                  </div>
+                  <div class="feature">
+                      <h3>⚡ Reactive Updates</h3>
+                      <p>Changes propagate automatically through the notebook.</p>
+                  </div>
+                  <div class="feature">
+                      <h3>📐 Parametric Design</h3>
+                      <p>Create parametric CAD models with mathematical precision.</p>
+                  </div>
+                  <div class="feature">
+                      <h3>🌍 Browser-Based</h3>
+                      <p>No installation needed - runs completely in your browser.</p>
+                  </div>
+              </div>
+
+              <div class="warning-box">
+                  <strong>⚠️ Note:</strong> First load may take 10-30 seconds to download Pyodide runtime.
+                  Full 3D visualization requires OCP.wasm integration (coming soon).
+              </div>
+
+              <h2>📚 Resources</h2>
+              <ul>
+                  <li><a href="https://github.com/tkoyama010/marimocad">marimocad GitHub Repository</a></li>
+                  <li><a href="https://build123d.readthedocs.io/">Build123d Documentation</a></li>
+                  <li><a href="https://docs.marimo.io/">marimo Documentation</a></li>
+              </ul>
+          </body>
+          </html>
+          INDEXEOF
+
+      - name: Add .nojekyll
+        run: touch wasm-output/.nojekyll
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'wasm-output'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

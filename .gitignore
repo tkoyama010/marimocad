@@ -125,6 +125,10 @@ dmypy.json
 # Ruff
 .ruff_cache/
 
+# WASM export output
+wasm-output/
+*.wasm.html
+
 # IDEs
 .vscode/
 .idea/
