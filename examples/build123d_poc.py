@@ -23,7 +23,7 @@ def __():
 
 @app.cell
 def __():
-    from build123d import *
+    from build123d import BuildPart, Box, Hole, Locations, fillet, Axis
     import math
     return math,
 
