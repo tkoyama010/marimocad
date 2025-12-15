@@ -237,7 +237,7 @@ def __(bracket, export_format):
                     from ocp_vscode import show
                     # show() can export SVG
                     return f"SVG export requires ocp-vscode viewer"
-                except:
+                except ImportError:
                     return "Install ocp-vscode for SVG export"
             else:
                 return f"{format_type} export not implemented in this demo"
