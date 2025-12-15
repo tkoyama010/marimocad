@@ -88,7 +88,7 @@ If automatic publishing fails, you can trigger manually:
 
 1. **Publish to TestPyPI:**
    - Run the Publish workflow with "testpypi" target
-   
+
 2. **Install and test:**
    ```bash
    pip install --index-url https://test.pypi.org/simple/ \

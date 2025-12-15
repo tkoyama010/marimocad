@@ -49,7 +49,7 @@ jobs:
       run: |
         # Get the previous tag
         PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
-        
+
         if [ -z "$PREV_TAG" ]; then
           # First release
           echo "NOTES<<EOF" >> $GITHUB_OUTPUT
