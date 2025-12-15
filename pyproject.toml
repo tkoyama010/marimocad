@@ -133,18 +133,42 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "ANN001",  # Missing type annotation for function argument
     "ANN201",  # Missing return type annotation for public function
     "ARG001",  # Unused function argument
+    "BLE001",  # Do not catch blind exception (test scripts need broad catching)
     "D100",    # Missing docstring in public module
     "D101",    # Missing docstring in public class
     "D102",    # Missing docstring in public method
     "D103",    # Missing docstring in public function
+    "F841",    # Local variable assigned but never used (test validation)
     "FBT001",  # Boolean positional arg in function definition
     "PLR2004", # Magic value used in comparison
     "S101",    # Use of assert detected
+    "T201",    # print found (test scripts use print for output)
+    "TRY300",  # Consider moving statement to else block (test pattern is fine)
 ]
 "examples/**/*.py" = [
+    "ANN001",  # Missing type annotation for function argument (Marimo patterns)
+    "ANN202",  # Missing return type annotation for private function (Marimo patterns)
+    "ARG001",  # Unused function argument (Marimo cell dependencies)
+    "B018",    # Useless expression (Marimo cells return expressions)
+    "BLE001",  # Do not catch blind exception (demo code with broad error handling)
     "D100",    # Missing docstring in public module
+    "D415",    # First line should end with a period (Marimo multi-line docstrings)
+    "E501",    # Line too long (some example comments exceed limit)
+    "ERA001",  # Commented-out code (examples show alternative approaches)
+    "F401",    # Imported but unused (conditional imports for demonstration)
+    "F821",    # Undefined name (Marimo cell dependencies resolved at runtime)
     "INP001",  # File is part of an implicit namespace package
+    "N803",    # Argument name should be lowercase (OCP uses PascalCase)
+    "N807",    # Function name should not start and end with __ (Marimo cell pattern)
+    "PLR0911", # Too many return statements (demo functions show multiple paths)
+    "PLR0913", # Too many arguments in function definition (Marimo cells with many deps)
+    "PTH123",  # open() should be replaced by Path.open() (simple demo code)
+    "RUF001",  # String contains ambiguous unicode (intentional in documentation)
+    "S110",    # try-except-pass detected (intentional for demo fallback)
+    "SIM105",  # Use contextlib.suppress (plain try-except clearer for demos)
+    "SIM117",  # Use single with statement (nested clearer for demos)
     "T201",    # print found
+    "TRY300",  # Consider moving statement to else block (demo pattern is fine)
 ]
 
 [tool.ruff.lint.isort]
@@ -171,3 +195,6 @@ python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
+exclude = [
+    "examples/",  # Marimo notebooks use patterns incompatible with mypy (multiple __ functions)
+]

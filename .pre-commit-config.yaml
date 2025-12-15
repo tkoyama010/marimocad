@@ -39,6 +39,7 @@ repos:
       - id: mypy
         additional_dependencies: []
         args: [--ignore-missing-imports]
+        exclude: ^(examples/|tests/test_examples\.py)
 
 # Configure pre-commit to run on all files or specific paths
 default_language_version:
