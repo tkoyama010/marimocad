@@ -131,6 +131,16 @@ def scale(
     Raises:
         ValueError: If scale factors are not positive.
     
+    Notes:
+        For non-uniform scaling of cylindrical shapes (Cylinder, Sphere):
+        - Cylinder: The radius is scaled by the average of x and y factors,
+          and height by the z factor. This is an approximation suitable for
+          most CAD applications but not mathematically precise for non-uniform
+          scaling of circular cross-sections.
+        - Sphere: The radius is scaled by the average of all three factors
+          to maintain spherical shape. For truly non-uniform scaling, consider
+          using an ellipsoid shape instead.
+    
     Examples:
         Uniform scaling::
         
