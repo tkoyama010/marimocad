@@ -142,6 +142,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "FBT001",  # Boolean positional arg in function definition
     "PLR2004", # Magic value used in comparison
     "S101",    # Use of assert detected
+    "PLC0415", # Import should be at top-level (test scripts use conditional imports)
     "T201",    # print found (test scripts use print for output)
     "TRY300",  # Consider moving statement to else block (test pattern is fine)
 ]
@@ -160,6 +161,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "INP001",  # File is part of an implicit namespace package
     "N803",    # Argument name should be lowercase (OCP uses PascalCase)
     "N807",    # Function name should not start and end with __ (Marimo cell pattern)
+    "PLC0415", # Import should be at top-level (Marimo cells use function-scoped imports)
     "PLR0911", # Too many return statements (demo functions show multiple paths)
     "PLR0913", # Too many arguments in function definition (Marimo cells with many deps)
     "PTH123",  # open() should be replaced by Path.open() (simple demo code)
