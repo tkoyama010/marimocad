@@ -45,7 +45,7 @@ def test_rotate_custom_axis():
     rotate(cylinder, angle=90, axis=(1, 1, 0))
     
     assert hasattr(cylinder, '_rotations')
-    assert box._rotations[0]['axis'] == (1, 1, 0)
+    assert cylinder._rotations[0]['axis'] == (1, 1, 0)
 
 
 def test_scale_uniform():
