@@ -378,7 +378,7 @@ User    API      ReactiveCore  GeometryEngine    OCC Kernel    Cache
 
  △    Inheritance (is-a)
  │
- 
+
  ◇    Composition (has-a)
  │
 ```

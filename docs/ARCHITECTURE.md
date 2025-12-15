@@ -171,18 +171,18 @@ marimocad is built on a layered architecture that integrates CAD geometry manipu
 ```python
 class ShapeGraph:
     """Manages dependency graph of shapes."""
-    
+
     def __init__(self):
         self.nodes = {}  # shape_id -> node
         self.edges = {}  # shape_id -> [dependent_shape_ids]
         self.cache = {}  # shape_id -> computed_result
-    
+
     def add_dependency(self, parent, child):
         """Add dependency relationship."""
-        
+
     def invalidate(self, shape_id):
         """Invalidate cache for shape and dependents."""
-        
+
     def evaluate(self, shape_id):
         """Evaluate shape with dependency resolution."""
 ```
@@ -191,14 +191,14 @@ class ShapeGraph:
 ```python
 class ParameterManager:
     """Manages reactive parameters."""
-    
+
     def __init__(self):
         self.parameters = {}
         self.observers = {}
-    
+
     def set_parameter(self, name, value):
         """Set parameter and notify observers."""
-        
+
     def observe(self, param_name, callback):
         """Register callback for parameter changes."""
 ```
@@ -219,16 +219,16 @@ class ParameterManager:
 ```python
 class Shape:
     """Immutable base class for all shapes."""
-    
+
     def __init__(self, geometry_data, parameters, operation_history):
         self._geometry = geometry_data
         self._params = parameters
         self._history = operation_history
-    
+
     def __add__(self, other):
         """Union operation."""
         return self.union(other)
-    
+
     def __sub__(self, other):
         """Subtraction operation."""
         return self.subtract(other)
@@ -517,7 +517,7 @@ def test_reactive_update():
     param = ReactiveParameter(value=10)
     box = primitives.box(param.value, 10, 10)
     initial_volume = box.volume
-    
+
     param.value = 20
     updated_box = primitives.box(param.value, 10, 10)
     assert updated_box.volume == 2 * initial_volume

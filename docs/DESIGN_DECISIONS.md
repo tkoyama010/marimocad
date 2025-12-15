@@ -20,7 +20,7 @@ All shape objects in marimocad are immutable. Operations on shapes return new sh
 1. **Mutable Objects**: Traditional CAD approach where operations modify objects in place
    - Rejected: Conflicts with reactive programming model
    - Rejected: Makes dependency tracking complex
-   
+
 2. **Copy-on-Write**: Objects appear mutable but copy internally
    - Rejected: Confusing semantics
    - Rejected: Hidden performance costs
@@ -57,7 +57,7 @@ Support method chaining for transformations and operations.
 ### Alternatives Considered
 1. **Function Composition**: Using nested function calls
    - Rejected: Less readable for long chains
-   
+
 2. **Pipeline Operator**: Wait for Python pipeline operator
    - Rejected: Not yet available in Python
 
@@ -91,7 +91,7 @@ Use Python context managers (with statements) for sketch-based modeling and asse
 ### Alternatives Considered
 1. **Explicit Builder Pattern**: Manual builder objects
    - Partial Use: Context managers are a Pythonic builder pattern
-   
+
 2. **Pure Functional**: All functional composition
    - Rejected: Too verbose for complex assemblies
 
@@ -123,7 +123,7 @@ Support both operators (+, -, &) and explicit methods (union, subtract, intersec
 ### Alternatives Considered
 1. **Only Operators**: More concise but less discoverable
    - Partial: Operators are primary, methods are aliases
-   
+
 2. **Only Methods**: More explicit but verbose
    - Rejected: Too verbose for common operations
 
@@ -157,7 +157,7 @@ Defer expensive geometric operations until results are actually needed, and cach
 ### Alternatives Considered
 1. **Eager Evaluation**: Compute everything immediately
    - Rejected: Poor interactive performance
-   
+
 2. **Pure Lazy**: Never cache anything
    - Rejected: Redundant computations
 
@@ -173,7 +173,7 @@ class Shape:
     def __init__(self):
         self._cached_geometry = None
         self._operation_tree = []
-    
+
     @property
     def geometry(self):
         if self._cached_geometry is None:
@@ -196,7 +196,7 @@ Integrate with Marimo's reactive system rather than building a custom reactivity
 1. **Custom Reactivity**: Build own reactive parameter system
    - Rejected: Unnecessary complexity
    - Rejected: Duplicate functionality
-   
+
 2. **Observable Pattern**: Implement observer pattern
    - Partial: Used internally, but Marimo integration is primary
 
@@ -230,7 +230,7 @@ Use comprehensive type hints for all public APIs.
 ### Alternatives Considered
 1. **No Type Hints**: More flexible but less safe
    - Rejected: Type hints are standard in modern Python
-   
+
 2. **Gradual Typing**: Add types over time
    - Rejected: Start with types from the beginning
 
@@ -268,11 +268,11 @@ Use OpenCASCADE (via OCP Python bindings) as the primary geometry kernel.
 1. **CGAL**: Computational geometry algorithms library
    - Partial: May use for specific algorithms
    - Rejected as primary: Less CAD-focused
-   
+
 2. **Custom Kernel**: Build lightweight custom kernel
    - Rejected: Massive undertaking
    - Rejected: Unlikely to match OCC quality
-   
+
 3. **Multiple Backends**: Support multiple kernels
    - Future: Possible plugin architecture
    - Initial: Too complex for v1
@@ -300,10 +300,10 @@ Use Three.js as the primary 3D rendering engine.
 ### Alternatives Considered
 1. **Babylon.js**: More feature-rich, heavier
    - Alternative: Support as optional backend
-   
+
 2. **WebGL Direct**: Maximum performance
    - Rejected: Too low-level, reinventing wheel
-   
+
 3. **VTK.js**: Scientific visualization focus
    - Considered: May use for specific features
 
@@ -327,7 +327,7 @@ Implement progressive rendering for large models: start with low-resolution mesh
 ### Alternatives Considered
 1. **Blocking Render**: Wait for full quality
    - Rejected: Poor UX for large models
-   
+
 2. **Fixed LOD**: Single level of detail
    - Rejected: Can't handle wide range of model sizes
 
@@ -357,7 +357,7 @@ Use string-based selector syntax for filtering faces, edges, and vertices (e.g.,
 ### Alternatives Considered
 1. **Predicate Functions**: Lambda-based filtering
    - Partial: Support both for flexibility
-   
+
 2. **Method Chaining**: .filter().by_direction(), etc.
    - Rejected: Too verbose
 
@@ -390,7 +390,7 @@ Treat assemblies as first-class objects, not just collections of shapes.
 ### Alternatives Considered
 1. **Flat Collections**: Just lists of shapes
    - Rejected: Loses structure and relationships
-   
+
 2. **Scene Graph**: Generic hierarchical structure
    - Partial: Assembly internally uses scene graph
 
@@ -423,7 +423,7 @@ Support STEP and IGES for precise CAD interchange, STL/OBJ/GLTF for visualizatio
 ### Alternatives Considered
 1. **Minimal Formats**: Only STL
    - Rejected: Too limiting
-   
+
 2. **All Formats**: Support every CAD format
    - Rejected: Maintenance burden
    - Future: Add more formats as needed
@@ -464,7 +464,7 @@ MarimoCADError (base)
 ### Alternatives Considered
 1. **Generic Exceptions**: Use built-in exceptions
    - Rejected: Less informative
-   
+
 2. **Return Codes**: Return None or error codes
    - Rejected: Not Pythonic
 
@@ -488,7 +488,7 @@ Support component classes that encapsulate parametric logic.
 ### Alternatives Considered
 1. **Pure Functional**: Just functions
    - Partial: Functions work too, components are optional
-   
+
 2. **Macro System**: Record and replay operations
    - Future: Possible addition
 
@@ -505,7 +505,7 @@ class CustomBracket(Component):
         self.width = width
         self.height = height
         self.thickness = thickness
-    
+
     def build(self):
         # Component logic here
         return shape

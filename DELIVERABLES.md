@@ -255,6 +255,6 @@ For questions about these deliverables:
 
 ---
 
-**Status:** Design Phase Complete ✅  
-**Date:** December 15, 2024  
+**Status:** Design Phase Complete ✅
+**Date:** December 15, 2024
 **Version:** 1.0

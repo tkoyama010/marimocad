@@ -44,7 +44,7 @@ from marimocad import Sketch, BuildPart
 with Sketch() as sketch:
     sketch.add_circle(center=(0, 0), radius=10)
     sketch.add_rectangle(center=(20, 0), width=15, height=10)
-    
+
 # Extrude sketch to create 3D part
 part = sketch.extrude(distance=5.0)
 
@@ -193,26 +193,26 @@ from marimocad import Component, primitives
 
 class FlangeBolt(Component):
     """Parametric flange bolt component."""
-    
+
     def __init__(self, diameter, length, head_height):
         super().__init__()
         self.diameter = diameter
         self.length = length
         self.head_height = head_height
-    
+
     def build(self):
         # Shaft
         shaft = primitives.cylinder(
             radius=self.diameter / 2,
             height=self.length
         )
-        
+
         # Head
         head = primitives.cylinder(
             radius=self.diameter,
             height=self.head_height
         ).translate(z=self.length)
-        
+
         return shaft + head
 
 # Usage in Marimo
@@ -297,29 +297,29 @@ viewer.export_html("model.html")
 ```python
 class Shape:
     """Base class for all geometric shapes."""
-    
+
     @property
     def volume(self) -> float: ...
-    
+
     @property
     def surface_area(self) -> float: ...
-    
+
     @property
     def center_of_mass(self) -> tuple[float, float, float]: ...
-    
+
     @property
     def bounding_box(self) -> BoundingBox: ...
-    
+
     def translate(self, x: float = 0, y: float = 0, z: float = 0) -> 'Shape': ...
-    
+
     def rotate(self, axis: str, angle: float) -> 'Shape': ...
-    
+
     def scale(self, x: float = 1, y: float = 1, z: float = 1) -> 'Shape': ...
-    
+
     def union(self, other: 'Shape') -> 'Shape': ...
-    
+
     def subtract(self, other: 'Shape') -> 'Shape': ...
-    
+
     def intersect(self, other: 'Shape') -> 'Shape': ...
 ```
 
@@ -328,24 +328,24 @@ class Shape:
 ```python
 class Shape2D(Shape):
     """Base class for 2D shapes."""
-    
+
     def extrude(self, distance: float) -> 'Shape3D': ...
-    
+
     def revolve(self, axis: str = "Z", angle: float = 360) -> 'Shape3D': ...
 
 class Shape3D(Shape):
     """Base class for 3D shapes."""
-    
+
     def faces(self, selector: str = "") -> list[Face]: ...
-    
+
     def edges(self, selector: str = "") -> list[Edge]: ...
-    
+
     def vertices(self, selector: str = "") -> list[Vertex]: ...
-    
+
     def fillet(self, edges: list[Edge], radius: float) -> 'Shape3D': ...
-    
+
     def chamfer(self, edges: list[Edge], distance: float) -> 'Shape3D': ...
-    
+
     def shell(self, faces: list[Face], thickness: float) -> 'Shape3D': ...
 ```
 

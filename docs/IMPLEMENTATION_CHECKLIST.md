@@ -5,7 +5,7 @@ This document tracks the implementation progress of the marimocad project based 
 ## Phase 1: Design and Architecture ✅ COMPLETE
 
 - [x] API specification document
-- [x] Architecture documentation  
+- [x] Architecture documentation
 - [x] Design decisions documentation
 - [x] Visual architecture diagrams
 - [x] Example usage code
@@ -344,8 +344,8 @@ This document tracks the implementation progress of the marimocad project based 
 
 ## Progress Tracking
 
-**Current Phase:** Phase 1 (Design) - ✅ Complete  
-**Next Phase:** Phase 2 (Core Infrastructure)  
+**Current Phase:** Phase 1 (Design) - ✅ Complete
+**Next Phase:** Phase 2 (Core Infrastructure)
 **Overall Progress:** ~8% (1/12 phases complete)
 
 **Last Updated:** 2024-12-15

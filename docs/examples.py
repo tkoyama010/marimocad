@@ -1,5 +1,4 @@
-"""
-marimocad Example Usage
+"""marimocad Example Usage
 
 This file demonstrates various usage patterns for the marimocad library.
 These examples show how to create, manipulate, and visualize CAD models
@@ -11,7 +10,9 @@ in a Marimo notebook environment.
 # =============================================================================
 
 import marimo as mo
+
 from marimocad import primitives, visualize
+
 
 # Create basic shapes
 box = primitives.box(width=20, height=20, depth=20)
@@ -33,6 +34,7 @@ mo.hstack([viewer1, viewer2, viewer3])
 
 from marimocad import primitives, visualize
 
+
 # Create shapes
 cube = primitives.box(30, 30, 30)
 sphere = primitives.sphere(radius=20)
@@ -43,11 +45,13 @@ difference = cube - sphere
 intersection = cube & sphere
 
 # Visualize results
-mo.hstack([
-    visualize(union, color="#FF6B6B"),
-    visualize(difference, color="#4ECDC4"),
-    visualize(intersection, color="#45B7D1")
-])
+mo.hstack(
+    [
+        visualize(union, color="#FF6B6B"),
+        visualize(difference, color="#4ECDC4"),
+        visualize(intersection, color="#45B7D1"),
+    ]
+)
 
 
 # =============================================================================
@@ -55,6 +59,7 @@ mo.hstack([
 # =============================================================================
 
 from marimocad import primitives, visualize
+
 
 # Create base shape
 base = primitives.box(10, 10, 10)
@@ -73,7 +78,9 @@ visualize([base, translated, rotated, scaled])
 # =============================================================================
 
 import marimo as mo
+
 from marimocad import primitives, visualize
+
 
 # Create reactive controls
 radius = mo.ui.slider(5, 30, value=15, label="Radius")
@@ -86,26 +93,28 @@ cylinder = primitives.cylinder(radius=radius.value, height=height.value)
 # Optional: Create a multi-sided prism instead
 if segments.value > 4:
     profile = primitives.polygon(
-        points=[(radius.value * np.cos(i * 2 * np.pi / segments.value),
-                 radius.value * np.sin(i * 2 * np.pi / segments.value))
-                for i in range(segments.value)]
+        points=[
+            (
+                radius.value * np.cos(i * 2 * np.pi / segments.value),
+                radius.value * np.sin(i * 2 * np.pi / segments.value),
+            )
+            for i in range(segments.value)
+        ]
     )
     shape = profile.extrude(distance=height.value)
 else:
     shape = cylinder
 
 # Display controls and visualization
-mo.vstack([
-    mo.hstack([radius, height, segments]),
-    visualize(shape, color="#FF6B6B")
-])
+mo.vstack([mo.hstack([radius, height, segments]), visualize(shape, color="#FF6B6B")])
 
 
 # =============================================================================
 # Example 5: Sketch-Based Modeling
 # =============================================================================
 
-from marimocad import Sketch, BuildPart, visualize
+from marimocad import BuildPart, Sketch, visualize
+
 
 # Create a complex part using sketch-based approach
 with BuildPart() as bracket:
@@ -113,19 +122,19 @@ with BuildPart() as bracket:
     with Sketch(plane="XY") as base:
         base.add_rectangle(width=100, height=60)
     bracket.extrude(distance=5)
-    
+
     # Mounting holes
     for x in [-35, 35]:
         for y in [-20, 20]:
             hole = primitives.cylinder(radius=4, height=5)
             hole = hole.translate(x=x, y=y, z=0)
             bracket.part = bracket.part - hole
-    
+
     # Vertical wall
     with Sketch(plane="XZ") as wall:
         wall.add_rectangle(width=100, height=40, center=(0, 25))
     bracket.extrude(distance=5)
-    
+
     # Fillet edges for strength
     bracket.fillet(edges=bracket.edges(), radius=3)
 
@@ -138,45 +147,42 @@ visualize(bracket.part, color="#4ECDC4", show_edges=True)
 # =============================================================================
 
 import marimo as mo
+
 from marimocad import Component, primitives, visualize
+
 
 class ParametricFlange(Component):
     """A parametric flange component."""
-    
+
     def __init__(self, outer_diameter, inner_diameter, thickness, bolt_holes):
         super().__init__()
         self.outer_diameter = outer_diameter
         self.inner_diameter = inner_diameter
         self.thickness = thickness
         self.bolt_holes = bolt_holes
-    
+
     def build(self):
         # Main flange body
-        outer = primitives.cylinder(
-            radius=self.outer_diameter / 2,
-            height=self.thickness
-        )
-        
+        outer = primitives.cylinder(radius=self.outer_diameter / 2, height=self.thickness)
+
         # Inner bore
-        inner = primitives.cylinder(
-            radius=self.inner_diameter / 2,
-            height=self.thickness
-        )
-        
+        inner = primitives.cylinder(radius=self.inner_diameter / 2, height=self.thickness)
+
         flange = outer - inner
-        
+
         # Bolt holes
         bolt_circle_radius = (self.outer_diameter + self.inner_diameter) / 4
         for i in range(self.bolt_holes):
             angle = i * 2 * 3.14159 / self.bolt_holes
             x = bolt_circle_radius * np.cos(angle)
             y = bolt_circle_radius * np.sin(angle)
-            
+
             hole = primitives.cylinder(radius=3, height=self.thickness)
             hole = hole.translate(x=x, y=y, z=0)
             flange = flange - hole
-        
+
         return flange
+
 
 # Create interactive flange
 outer_d = mo.ui.slider(50, 150, value=100, label="Outer Diameter")
@@ -188,13 +194,12 @@ flange = ParametricFlange(
     outer_diameter=outer_d.value,
     inner_diameter=inner_d.value,
     thickness=thickness.value,
-    bolt_holes=holes.value
+    bolt_holes=holes.value,
 )
 
-mo.vstack([
-    mo.hstack([outer_d, inner_d, thickness, holes]),
-    visualize(flange.build(), color="#45B7D1")
-])
+mo.vstack(
+    [mo.hstack([outer_d, inner_d, thickness, holes]), visualize(flange.build(), color="#45B7D1")]
+)
 
 
 # =============================================================================
@@ -202,6 +207,7 @@ mo.vstack([
 # =============================================================================
 
 from marimocad import Assembly, primitives, visualize
+
 
 # Create an assembly
 motor_assembly = Assembly(name="simple_motor")
@@ -216,26 +222,17 @@ motor_assembly.add_part(
     "motor",
     motor_body,
     position=(0, 0, 10),
-    rotation=(90, 0, 0)  # Rotate to align horizontally
+    rotation=(90, 0, 0),  # Rotate to align horizontally
 )
 
 # Add motor shaft
 shaft = primitives.cylinder(radius=5, height=100)
-motor_assembly.add_part(
-    "shaft",
-    shaft,
-    position=(0, 0, 40),
-    rotation=(90, 0, 0)
-)
+motor_assembly.add_part("shaft", shaft, position=(0, 0, 40), rotation=(90, 0, 0))
 
 # Add mounting brackets
 for x in [-50, 50]:
     bracket = primitives.box(width=20, height=60, depth=40)
-    motor_assembly.add_part(
-        f"bracket_{x}",
-        bracket,
-        position=(x, 0, 10)
-    )
+    motor_assembly.add_part(f"bracket_{x}", bracket, position=(x, 0, 10))
 
 # Visualize assembly
 visualize(motor_assembly, show_edges=True)
@@ -248,26 +245,22 @@ motor_assembly.export_step("motor_assembly.step")
 # Example 8: Advanced Surface Modeling with Loft
 # =============================================================================
 
-from marimocad import primitives, loft, visualize
 import numpy as np
+
+from marimocad import loft, primitives, visualize
+
 
 # Create profiles at different heights
 profiles = []
 
 # Bottom profile - large circle
-profiles.append(
-    primitives.circle(radius=20).translate(z=0)
-)
+profiles.append(primitives.circle(radius=20).translate(z=0))
 
 # Middle profile - square
-profiles.append(
-    primitives.rectangle(width=30, height=30).translate(z=20)
-)
+profiles.append(primitives.rectangle(width=30, height=30).translate(z=20))
 
 # Top profile - small circle
-profiles.append(
-    primitives.circle(radius=10).translate(z=40)
-)
+profiles.append(primitives.circle(radius=10).translate(z=40))
 
 # Loft between profiles
 vase = loft(profiles)
@@ -281,14 +274,11 @@ visualize(vase, color="#FF6B6B", opacity=0.9)
 # =============================================================================
 
 from marimocad import primitives, spline, sweep, visualize
-import numpy as np
+
 
 # Define sweep path (helix)
 t = np.linspace(0, 4 * np.pi, 100)
-path_points = [
-    (10 * np.cos(ti), 10 * np.sin(ti), ti * 5)
-    for ti in t
-]
+path_points = [(10 * np.cos(ti), 10 * np.sin(ti), ti * 5) for ti in t]
 path = spline(points=path_points, degree=3)
 
 # Define profile to sweep
@@ -307,6 +297,7 @@ visualize(spring, color="#4ECDC4")
 
 from marimocad import primitives, visualize
 
+
 # Create base shape
 body = primitives.box(width=60, height=40, depth=30)
 
@@ -322,17 +313,17 @@ body = body - feature2
 # Add chamfers and fillets
 body = body.chamfer(
     edges=body.edges(">Z"),  # Top edges
-    distance=3
+    distance=3,
 )
 body = body.fillet(
     edges=body.edges("<Z"),  # Bottom edges
-    radius=5
+    radius=5,
 )
 
 # Shell the part
 body = body.shell(
     faces=[body.faces(">Y")[0]],  # Remove top face
-    thickness=3
+    thickness=3,
 )
 
 # Visualize final part
@@ -343,8 +334,10 @@ visualize(body, color="#45B7D1", show_edges=True)
 # Example 11: Measurements and Queries
 # =============================================================================
 
-from marimocad import primitives
 import marimo as mo
+
+from marimocad import primitives
+
 
 # Create a complex shape
 box = primitives.box(30, 20, 15)
@@ -379,6 +372,7 @@ mo.md(f"""
 
 from marimocad import io, primitives, visualize
 
+
 # Create a part
 part = primitives.box(50, 30, 20)
 part = part.fillet(edges=part.edges(), radius=3)
@@ -399,7 +393,9 @@ visualize(imported_part)
 # =============================================================================
 
 import marimo as mo
+
 from marimocad import primitives, visualize
+
 
 # Create multiple design variations
 length = mo.ui.slider(20, 100, value=50, label="Length")
@@ -419,24 +415,28 @@ volume = box.volume
 mass = volume * 0.00785  # Assuming steel density (g/mm³)
 
 # Display everything
-mo.vstack([
-    mo.md("## Parametric Box Designer"),
-    mo.hstack([length, width, height, corner_radius]),
-    mo.md(f"""
+mo.vstack(
+    [
+        mo.md("## Parametric Box Designer"),
+        mo.hstack([length, width, height, corner_radius]),
+        mo.md(f"""
     ### Properties
     - Volume: {volume:.2f} mm³
     - Estimated Mass: {mass:.2f} g (steel)
     """),
-    visualize(box, color="#FF6B6B", show_edges=True)
-])
+        visualize(box, color="#FF6B6B", show_edges=True),
+    ]
+)
 
 
 # =============================================================================
 # Example 14: Pattern Creation
 # =============================================================================
 
-from marimocad import primitives, visualize
 import numpy as np
+
+from marimocad import primitives, visualize
+
 
 # Create base feature
 feature = primitives.cylinder(radius=3, height=20)
@@ -450,9 +450,9 @@ for i in range(num_features):
     angle = i * 2 * np.pi / num_features
     x = radius * np.cos(angle)
     y = radius * np.sin(angle)
-    
+
     positioned_feature = feature.translate(x=x, y=y, z=0)
-    
+
     if result is None:
         result = positioned_feature
     else:
@@ -471,22 +471,25 @@ visualize(result, color="#4ECDC4")
 # =============================================================================
 
 import marimo as mo
+
 from marimocad import Assembly, primitives, visualize
+
 
 # Create a gear assembly example
 def create_gear(num_teeth, module, thickness):
     """Simple gear approximation."""
     # Pitch diameter
     pitch_diameter = num_teeth * module
-    
+
     # Create base cylinder
-    gear = primitives.cylinder(radius=pitch_diameter/2, height=thickness)
-    
+    gear = primitives.cylinder(radius=pitch_diameter / 2, height=thickness)
+
     # Add center hole
     hole = primitives.cylinder(radius=module, height=thickness)
     gear = gear - hole
-    
+
     return gear
+
 
 # Create assembly
 gear_assembly = Assembly(name="gear_train")
