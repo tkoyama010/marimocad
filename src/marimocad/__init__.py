@@ -19,9 +19,60 @@ For detailed documentation, see:
 Example:
     >>> import marimocad as mc
     >>> box = mc.box(10, 10, 10)
-    >>> mc.viewer(box)
+    >>> sphere = mc.sphere(5)
+    >>> result = mc.union(box, sphere)
 """
+
+from marimocad._types import Edge, Face, Geometry, Solid, Vertex, Wire
+from marimocad.extrude import extrude, loft, revolve, sweep
+from marimocad.geometry import (
+    box,
+    circle,
+    cone,
+    cylinder,
+    polygon,
+    rectangle,
+    sphere,
+    torus,
+)
+from marimocad.operations import (
+    intersect,
+    mirror,
+    rotate,
+    scale,
+    subtract,
+    translate,
+    union,
+)
+
 
 __version__ = "0.1.dev0"
 
-__all__ = ["__version__"]
+__all__ = [
+    "Edge",
+    "Face",
+    "Geometry",
+    "Solid",
+    "Vertex",
+    "Wire",
+    "__version__",
+    "box",
+    "circle",
+    "cone",
+    "cylinder",
+    "extrude",
+    "intersect",
+    "loft",
+    "mirror",
+    "polygon",
+    "rectangle",
+    "revolve",
+    "rotate",
+    "scale",
+    "sphere",
+    "subtract",
+    "sweep",
+    "torus",
+    "translate",
+    "union",
+]
