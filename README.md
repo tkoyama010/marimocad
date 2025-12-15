@@ -25,6 +25,8 @@ See [CAD_LIBRARY_COMPARISON.md](CAD_LIBRARY_COMPARISON.md) for detailed evaluati
 
 For the package (when available):
 
+## Installation
+
 ```bash
 pip install marimocad
 ```
