@@ -122,12 +122,25 @@ See [tests/README.md](tests/README.md) for more details on testing.
 - [x] Research and evaluate CAD backend libraries
 - [x] Select primary backend (Build123d)
 - [x] Create proof-of-concept examples
+- [x] Design API and architecture
 - [ ] Implement marimocad wrapper API
 - [ ] Create component library
 - [ ] Add visualization integration
 - [ ] Implement assembly support
 - [ ] Add constraint solver
 - [ ] Documentation and tutorials
+
+## API and Architecture Documentation
+
+Comprehensive design documentation is now available:
+
+- **[API Specification](API_SPECIFICATION.md)** - Complete API reference with all functions and types
+- **[Architecture](ARCHITECTURE.md)** - System architecture, data flow, and design patterns
+- **[Design Decisions](DESIGN_DECISIONS.md)** - Rationale for key architectural choices
+- **[Data Structures](DATA_STRUCTURES.md)** - Type system and core data structures
+- **[Usage Examples](EXAMPLES.md)** - Comprehensive examples of API usage
+
+These documents provide a complete blueprint for the marimocad implementation.
 
 ## Research Findings
 
