@@ -45,6 +45,20 @@ pip install ocp-vscode
 marimo edit examples/build123d_poc.py
 ```
 
+## Testing
+
+The example code is tested automatically via GitHub Actions CI. You can also run tests locally:
+
+```bash
+# Install dependencies
+pip install build123d cadquery marimo
+
+# Run tests
+python tests/test_examples.py
+```
+
+See [tests/README.md](tests/README.md) for more details on testing.
+
 ## Project Goals
 
 1. **Parametric CAD in Marimo** - Leverage Marimo's reactivity for interactive CAD modeling

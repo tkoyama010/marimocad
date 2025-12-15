@@ -87,6 +87,21 @@ marimo run examples/build123d_poc.py
 python examples/build123d_poc.py
 ```
 
+## Testing
+
+All examples are automatically tested via GitHub Actions CI to ensure:
+- Valid Python syntax
+- Successful imports
+- Proper Marimo app structure
+- Basic geometry creation works
+
+Run tests locally:
+```bash
+python tests/test_examples.py
+```
+
+See [../tests/README.md](../tests/README.md) for more details.
+
 ## Key Findings
 
 ### Build123d Advantages
