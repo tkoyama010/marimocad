@@ -23,22 +23,38 @@ See [CAD_LIBRARY_COMPARISON.md](CAD_LIBRARY_COMPARISON.md) for detailed evaluati
 
 ## Installation
 
-For the package (when available):
+### From PyPI
 
-## Installation
+Install the latest stable release:
 
 ```bash
 pip install marimocad
 ```
 
-For testing examples:
+### With CAD Backend
+
+For full functionality, install with a CAD backend (Build123d recommended):
 
 ```bash
-pip install build123d marimo
+pip install marimocad build123d
+```
+
+### For Development
+
+For testing examples and development:
+
+```bash
+pip install marimocad[dev] build123d marimo
 
 # Optional: For visualization
 pip install ocp-vscode
 ```
+
+### Requirements
+
+- Python 3.9 or higher
+- marimo >= 0.1.0
+- Recommended: build123d for CAD operations
 
 ## Development
 
