@@ -28,7 +28,7 @@ This document summarizes the CAD library research conducted for the marimocad pr
 
 ### Performance (average operation time)
 - **CadQuery**: 0.0096s
-- **Build123d**: 0.0120s  
+- **Build123d**: 0.0120s
 - **OCP**: 0.0040s (but 10-20x more code required)
 
 All libraries perform excellently for interactive CAD work.
@@ -133,6 +133,6 @@ All findings have been verified through:
 
 ---
 
-**Research completed**: 2024-12-15  
-**Issue**: tkoyama010/marimocad#2  
+**Research completed**: 2024-12-15
+**Issue**: tkoyama010/marimocad#2
 **Related Issue**: tkoyama010/marimocad#1

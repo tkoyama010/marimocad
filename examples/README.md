@@ -105,30 +105,30 @@ See [../tests/README.md](../tests/README.md) for more details.
 ## Key Findings
 
 ### Build123d Advantages
-✅ Native Marimo/notebook integration  
-✅ Modern Python API (context managers, type hints)  
-✅ Multiple modeling paradigms  
-✅ Powerful selector system  
-✅ Active development  
+✅ Native Marimo/notebook integration
+✅ Modern Python API (context managers, type hints)
+✅ Multiple modeling paradigms
+✅ Powerful selector system
+✅ Active development
 
 ### CadQuery Advantages
-✅ Mature and stable  
-✅ Excellent documentation  
-✅ Large community  
-✅ Fluent, chainable API  
-✅ Rich ecosystem  
+✅ Mature and stable
+✅ Excellent documentation
+✅ Large community
+✅ Fluent, chainable API
+✅ Rich ecosystem
 
 ### OCP Considerations
-⚠️ Too low-level for users  
-⚠️ Verbose and complex  
-⚠️ Not Pythonic  
-✅ Maximum control  
-✅ Foundation for other libraries  
+⚠️ Too low-level for users
+⚠️ Verbose and complex
+⚠️ Not Pythonic
+✅ Maximum control
+✅ Foundation for other libraries
 
 ## Recommendation
 
-**Primary Backend:** Build123d  
-**Secondary Backend:** CadQuery (optional)  
+**Primary Backend:** Build123d
+**Secondary Backend:** CadQuery (optional)
 **Direct OCP:** Only for advanced internal use
 
 ## Next Steps
