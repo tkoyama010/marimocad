@@ -18,8 +18,8 @@ def test_syntax(filepath):
     """Test that file has valid Python syntax."""
     print(f"\nTesting syntax: {filepath}")
     try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            ast.parse(f.read())
+        content = Path(filepath).read_text(encoding='utf-8')
+        ast.parse(content)
         print(f"  ✓ Valid Python syntax")
         return True
     except SyntaxError as e:
@@ -43,8 +43,7 @@ def test_marimo_structure(filepath):
     """Test that file is a valid marimo app."""
     print(f"\nTesting marimo structure: {filepath}")
     try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = Path(filepath).read_text(encoding='utf-8')
         
         if 'marimo.App' not in content:
             print(f"  ✗ Missing marimo.App definition")
@@ -127,21 +126,19 @@ def main():
     
     all_passed = True
     
-    # Test syntax
-    for example_file, _ in examples:
-        filepath = examples_dir / example_file
-        if not test_syntax(filepath):
-            all_passed = False
-    
-    # Test imports
+    # Run all tests for each example
     for example_file, import_test in examples:
         filepath = examples_dir / example_file
+        
+        # Test syntax
+        if not test_syntax(filepath):
+            all_passed = False
+        
+        # Test imports
         if not test_imports(filepath, import_test):
             all_passed = False
-    
-    # Test marimo structure
-    for example_file, _ in examples:
-        filepath = examples_dir / example_file
+        
+        # Test marimo structure
         if not test_marimo_structure(filepath):
             all_passed = False
     
