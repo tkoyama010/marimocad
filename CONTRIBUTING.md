@@ -22,11 +22,11 @@ Thank you for your interest in contributing to marimocad! This document provides
    ```bash
    # Install uv if you haven't already
    curl -LsSf https://astral.sh/uv/install.sh | sh
-   
+
    # Sync dependencies
    uv sync
    ```
-   
+
    Or using pip:
    ```bash
    python -m venv venv
