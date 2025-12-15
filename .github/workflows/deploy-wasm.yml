@@ -40,10 +40,12 @@ jobs:
         run: |
           mkdir -p wasm-output
           marimo export html-wasm examples/wasm_demo.py -o wasm-output --mode run
+          # Rename exported notebook to wasm_demo.html
+          mv wasm-output/index.html wasm-output/wasm_demo.html
 
       - name: Create index page
         run: |
-          cat > wasm-output/index.html << 'EOF'
+          cat > wasm-output/index.html << 'INDEXEOF'
           <!DOCTYPE html>
           <html lang="en">
           <head>
@@ -52,17 +54,11 @@ jobs:
               <title>marimocad WASM Demo</title>
               <style>
                   body {
-                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                       max-width: 1200px;
                       margin: 0 auto;
                       padding: 40px 20px;
                       line-height: 1.6;
-                      color: #333;
-                  }
-                  h1 {
-                      color: #2c3e50;
-                      border-bottom: 3px solid #3498db;
-                      padding-bottom: 10px;
                   }
                   .hero {
                       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -71,16 +67,6 @@ jobs:
                       border-radius: 10px;
                       margin-bottom: 40px;
                       text-align: center;
-                  }
-                  .hero h1 {
-                      color: white;
-                      border: none;
-                      font-size: 2.5em;
-                      margin: 0 0 20px 0;
-                  }
-                  .hero p {
-                      font-size: 1.2em;
-                      margin: 10px 0;
                   }
                   .demo-button {
                       display: inline-block;
@@ -91,7 +77,6 @@ jobs:
                       border-radius: 5px;
                       font-size: 1.1em;
                       margin-top: 20px;
-                      transition: background-color 0.3s;
                   }
                   .demo-button:hover {
                       background-color: #2980b9;
@@ -108,10 +93,6 @@ jobs:
                       border-radius: 8px;
                       background: #f9f9f9;
                   }
-                  .feature h3 {
-                      color: #3498db;
-                      margin-top: 0;
-                  }
                   .info-box {
                       background: #e8f4f8;
                       border-left: 4px solid #3498db;
@@ -126,22 +107,6 @@ jobs:
                       margin: 20px 0;
                       border-radius: 4px;
                   }
-                  footer {
-                      margin-top: 60px;
-                      padding-top: 20px;
-                      border-top: 1px solid #ddd;
-                      text-align: center;
-                      color: #666;
-                  }
-                  .badge {
-                      display: inline-block;
-                      padding: 3px 8px;
-                      background: #3498db;
-                      color: white;
-                      border-radius: 3px;
-                      font-size: 0.85em;
-                      margin-left: 5px;
-                  }
               </style>
           </head>
           <body>
@@ -154,9 +119,7 @@ jobs:
 
               <div class="info-box">
                   <strong>ℹ️ About This Demo:</strong>
-                  This is a WebAssembly-powered demo of marimocad running entirely in your browser using
-                  <a href="https://pyodide.org/">Pyodide</a> and <a href="https://marimo.io/">marimo</a>.
-                  No server-side execution - everything runs on your device!
+                  This is a WebAssembly-powered demo of marimocad running entirely in your browser.
               </div>
 
               <h2>✨ Features</h2>
@@ -167,7 +130,7 @@ jobs:
                   </div>
                   <div class="feature">
                       <h3>⚡ Reactive Updates</h3>
-                      <p>Changes propagate automatically through the notebook using marimo's reactive model.</p>
+                      <p>Changes propagate automatically through the notebook.</p>
                   </div>
                   <div class="feature">
                       <h3>📐 Parametric Design</h3>
@@ -180,37 +143,19 @@ jobs:
               </div>
 
               <div class="warning-box">
-                  <strong>⚠️ WASM Limitations:</strong>
-                  This demo has some limitations compared to the desktop version:
-                  <ul>
-                      <li>Slower performance (WASM overhead)</li>
-                      <li>Limited 3D visualization (requires OCP.wasm integration)</li>
-                      <li>No file export capabilities in browser</li>
-                      <li>First load may take 10-30 seconds</li>
-                  </ul>
-                  For production work, we recommend the desktop version.
+                  <strong>⚠️ Note:</strong> First load may take 10-30 seconds to download Pyodide runtime.
+                  Full 3D visualization requires OCP.wasm integration (coming soon).
               </div>
-
-              <h2>🖥️ Try the Full Version</h2>
-              <p>For the complete marimocad experience with full 3D rendering and all features:</p>
-              <pre><code>pip install build123d marimo
-marimo edit examples/build123d_poc.py</code></pre>
 
               <h2>📚 Resources</h2>
               <ul>
                   <li><a href="https://github.com/tkoyama010/marimocad">marimocad GitHub Repository</a></li>
                   <li><a href="https://build123d.readthedocs.io/">Build123d Documentation</a></li>
                   <li><a href="https://docs.marimo.io/">marimo Documentation</a></li>
-                  <li><a href="https://github.com/yeicor/OCP.wasm">OCP.wasm Project</a></li>
               </ul>
-
-              <footer>
-                  <p>Made with ❤️ using <strong>marimo</strong> + <strong>Build123d</strong></p>
-                  <p><a href="https://github.com/tkoyama010/marimocad">View on GitHub</a></p>
-              </footer>
           </body>
           </html>
-          EOF
+          INDEXEOF
 
       - name: Add .nojekyll
         run: touch wasm-output/.nojekyll
