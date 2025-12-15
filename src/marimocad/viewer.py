@@ -2,7 +2,7 @@
 3D Viewer component for Marimo notebooks using Plotly.
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 import marimo as mo
 import numpy as np
@@ -40,7 +40,7 @@ class Viewer3D:
         self.width = width
         self.height = height
         self.background_color = background_color
-        self.traces: List[go.Scatter3d | go.Mesh3d] = []
+        self.traces: List[Union[go.Scatter3d, go.Mesh3d]] = []
         self._selected_trace = None
         
         # Default camera and lighting settings
@@ -88,10 +88,52 @@ class Viewer3D:
             cz + d/2, cz + d/2, cz + d/2, cz + d/2
         ])
         
-        # Define the 12 triangles (2 per face)
-        i = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 0, 0, 1, 1, 2, 2, 3, 3]
-        j = [1, 3, 2, 0, 3, 1, 0, 2, 5, 7, 6, 4, 7, 5, 4, 6, 4, 1, 5, 2, 6, 3, 7, 0]
-        k = [2, 4, 3, 4, 0, 5, 1, 5, 6, 0, 7, 1, 4, 2, 5, 3, 5, 5, 1, 6, 2, 7, 3, 4]
+        # Define the 12 triangles (2 per face) for the box
+        # Vertex indices: 0-3 are bottom face, 4-7 are top face
+        # Each face of the box is split into 2 triangles
+        # Format: [i, j, k] where each triple defines a triangle
+        i = [
+            0, 0,   # Bottom face (z-)
+            1, 1,   # Bottom face continued
+            2, 2,   # Bottom face continued
+            3, 3,   # Bottom face continued
+            4, 4,   # Top face (z+)
+            5, 5,   # Top face continued
+            6, 6,   # Top face continued
+            7, 7,   # Top face continued
+            0, 0,   # Side faces
+            1, 1,   # Side faces continued
+            2, 2,   # Side faces continued
+            3, 3    # Side faces continued
+        ]
+        j = [
+            1, 3,   # Bottom triangles
+            2, 0,
+            3, 1,
+            0, 2,
+            5, 7,   # Top triangles
+            6, 4,
+            7, 5,
+            4, 6,
+            4, 1,   # Side triangles
+            5, 2,
+            6, 3,
+            7, 0
+        ]
+        k = [
+            2, 4,   # Bottom triangles
+            3, 4,
+            0, 5,
+            1, 5,
+            6, 0,   # Top triangles
+            7, 1,
+            4, 2,
+            5, 3,
+            5, 5,   # Side triangles
+            1, 6,
+            2, 7,
+            3, 4
+        ]
         
         mesh = go.Mesh3d(
             x=x, y=y, z=z,
