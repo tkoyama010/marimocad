@@ -85,11 +85,11 @@ touch wasm-output/.nojekyll
 
 ### What Works
 
-✅ **Core Python:** Standard library, math operations  
-✅ **Marimo:** Full reactive notebook functionality  
-✅ **UI Components:** Sliders, inputs, buttons, charts  
-✅ **Data Processing:** NumPy, Pandas (via Pyodide)  
-✅ **Visualization:** Matplotlib, Altair, Plotly  
+✅ **Core Python:** Standard library, math operations
+✅ **Marimo:** Full reactive notebook functionality
+✅ **UI Components:** Sliders, inputs, buttons, charts
+✅ **Data Processing:** NumPy, Pandas (via Pyodide)
+✅ **Visualization:** Matplotlib, Altair, Plotly
 ✅ **Build123d:** Geometry creation (requires OCP.wasm)
 
 ### Current Limitations

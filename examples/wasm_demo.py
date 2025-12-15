@@ -13,6 +13,7 @@ More complex features are available in the desktop examples.
 
 import marimo
 
+
 __generated_with = "0.18.4"
 app = marimo.App(width="medium")
 
@@ -37,7 +38,6 @@ def __(mo):
     > 💡 **Tip:** This is a simplified demo optimized for browser performance.
     > For more advanced features, try the desktop examples.
     """)
-    return
 
 
 @app.cell
@@ -47,21 +47,14 @@ def __(mo):
 
     Create a customizable 3D box by adjusting the dimensions below:
     """)
-    return
 
 
 @app.cell
 def __(mo):
     # Interactive parameters for box
-    box_length = mo.ui.slider(
-        start=5, stop=30, value=15, label="Length (mm)", show_value=True
-    )
-    box_width = mo.ui.slider(
-        start=5, stop=30, value=10, label="Width (mm)", show_value=True
-    )
-    box_height = mo.ui.slider(
-        start=3, stop=20, value=8, label="Height (mm)", show_value=True
-    )
+    box_length = mo.ui.slider(start=5, stop=30, value=15, label="Length (mm)", show_value=True)
+    box_width = mo.ui.slider(start=5, stop=30, value=10, label="Width (mm)", show_value=True)
+    box_height = mo.ui.slider(start=3, stop=20, value=8, label="Height (mm)", show_value=True)
 
     mo.vstack([box_length, box_width, box_height])
     return box_height, box_length, box_width
@@ -77,7 +70,6 @@ def __(box_height, box_length, box_width, mo):
     - **Height:** {box_height.value} mm
     - **Volume:** {box_length.value * box_width.value * box_height.value:.1f} mm³
     """)
-    return
 
 
 @app.cell
@@ -87,18 +79,13 @@ def __(mo):
 
     Create a customizable cylinder:
     """)
-    return
 
 
 @app.cell
 def __(mo):
     # Interactive parameters for cylinder
-    cylinder_radius = mo.ui.slider(
-        start=3, stop=15, value=6, label="Radius (mm)", show_value=True
-    )
-    cylinder_height = mo.ui.slider(
-        start=5, stop=30, value=12, label="Height (mm)", show_value=True
-    )
+    cylinder_radius = mo.ui.slider(start=3, stop=15, value=6, label="Radius (mm)", show_value=True)
+    cylinder_height = mo.ui.slider(start=5, stop=30, value=12, label="Height (mm)", show_value=True)
 
     mo.vstack([cylinder_radius, cylinder_height])
     return cylinder_height, cylinder_radius
@@ -128,7 +115,6 @@ def __(mo):
     This demo uses **Build123d**, a modern Python CAD library that works seamlessly
     with marimo's reactive programming model.
     """)
-    return
 
 
 @app.cell
@@ -239,7 +225,6 @@ def __(mo):
     - Use simpler geometry for faster updates
     - Desktop version is recommended for production work
     """)
-    return
 
 
 @app.cell
@@ -263,7 +248,6 @@ def __(mo):
 
     **Made with ❤️ using marimo + Build123d**
     """)
-    return
 
 
 if __name__ == "__main__":
