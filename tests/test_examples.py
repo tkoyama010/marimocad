@@ -18,7 +18,7 @@ def test_syntax(filepath):
     """Test that file has valid Python syntax."""
     print(f"\nTesting syntax: {filepath}")
     try:
-        with open(filepath, 'r') as f:
+        with open(filepath, 'r', encoding='utf-8') as f:
             ast.parse(f.read())
         print(f"  ✓ Valid Python syntax")
         return True
@@ -43,7 +43,7 @@ def test_marimo_structure(filepath):
     """Test that file is a valid marimo app."""
     print(f"\nTesting marimo structure: {filepath}")
     try:
-        with open(filepath, 'r') as f:
+        with open(filepath, 'r', encoding='utf-8') as f:
             content = f.read()
         
         if 'marimo.App' not in content:

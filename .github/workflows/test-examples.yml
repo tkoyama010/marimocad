@@ -5,11 +5,13 @@ on:
     branches: [ main, copilot/** ]
     paths:
       - 'examples/**'
+      - 'tests/**'
       - '.github/workflows/test-examples.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'examples/**'
+      - 'tests/**'
       - '.github/workflows/test-examples.yml'
 
 jobs:
@@ -32,111 +34,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install marimo build123d cadquery
     
-    - name: Validate Python syntax
+    - name: Run tests
       run: |
-        python -m py_compile examples/build123d_poc.py
-        python -m py_compile examples/cadquery_poc.py
-        python -m py_compile examples/ocp_poc.py
-    
-    - name: Check imports in build123d example
-      run: |
-        python -c "
-        import sys
-        import ast
-        
-        # Parse the file
-        with open('examples/build123d_poc.py', 'r') as f:
-            tree = ast.parse(f.read())
-        
-        # Verify it's a valid marimo app
-        print('✓ build123d_poc.py is valid Python')
-        
-        # Test that key imports work
-        import marimo
-        from build123d import BuildPart, Box, Hole, Locations, fillet, Axis
-        print('✓ All imports successful')
-        "
-    
-    - name: Check imports in cadquery example
-      run: |
-        python -c "
-        import sys
-        import ast
-        
-        # Parse the file
-        with open('examples/cadquery_poc.py', 'r') as f:
-            tree = ast.parse(f.read())
-        
-        print('✓ cadquery_poc.py is valid Python')
-        
-        # Test that key imports work
-        import marimo
-        import cadquery as cq
-        print('✓ All imports successful')
-        "
-    
-    - name: Check imports in ocp example
-      run: |
-        python -c "
-        import sys
-        import ast
-        
-        # Parse the file
-        with open('examples/ocp_poc.py', 'r') as f:
-            tree = ast.parse(f.read())
-        
-        print('✓ ocp_poc.py is valid Python')
-        
-        # Test that key imports work
-        import marimo
-        from OCP.BRepPrimAPI import BRepPrimAPI_MakeBox
-        print('✓ All imports successful')
-        "
-    
-    - name: Verify marimo apps can be loaded
-      run: |
-        python -c "
-        import marimo
-        
-        # Try to load each app
-        apps = [
-            'examples/build123d_poc.py',
-            'examples/cadquery_poc.py',
-            'examples/ocp_poc.py'
-        ]
-        
-        for app_path in apps:
-            with open(app_path, 'r') as f:
-                code = f.read()
-            
-            # Check that marimo.App is defined
-            if 'marimo.App' in code:
-                print(f'✓ {app_path} defines marimo.App')
-            else:
-                print(f'✗ {app_path} missing marimo.App')
-                exit(1)
-        
-        print('✓ All marimo apps are properly structured')
-        "
-    
-    - name: Test basic geometry creation
-      run: |
-        python -c "
-        # Test Build123d
-        from build123d import BuildPart, Box
-        with BuildPart() as test:
-            Box(10, 10, 10)
-        print('✓ Build123d: Basic geometry creation works')
-        
-        # Test CadQuery
-        import cadquery as cq
-        box = cq.Workplane('XY').box(10, 10, 10)
-        print('✓ CadQuery: Basic geometry creation works')
-        
-        # Test OCP
-        from OCP.BRepPrimAPI import BRepPrimAPI_MakeBox
-        box = BRepPrimAPI_MakeBox(10, 10, 10).Shape()
-        print('✓ OCP: Basic geometry creation works')
-        
-        print('✓ All libraries functional')
-        "
+        python tests/test_examples.py
