@@ -1,6 +1,6 @@
 # marimocad
 
-A Python CAD library for parametric modeling in [Marimo](https://marimo.io) notebooks.
+CAD tools for marimo notebooks - Interactive 3D modeling and computational geometry.
 
 ## Status
 
@@ -12,7 +12,7 @@ After comprehensive research and testing, **[Build123d](https://github.com/gumyr
 
 ### Why Build123d?
 
-- ✅ **Native notebook integration** - Built-in `_repr_mimebundle_()` support
+- ✅ **Native notebook integration** - Built-in `_repr_html_()` support
 - ✅ **Modern Python API** - Context managers, type hints, and Pythonic design
 - ✅ **Powerful selectors** - Intuitive filtering and topology navigation
 - ✅ **Multiple paradigms** - Builder, Algebra, and Direct modeling modes
@@ -21,15 +21,15 @@ After comprehensive research and testing, **[Build123d](https://github.com/gumyr
 
 See [CAD_LIBRARY_COMPARISON.md](CAD_LIBRARY_COMPARISON.md) for detailed evaluation of Build123d, CadQuery, and pythonOCC.
 
-## Research Documentation
+## Installation
 
-- **[CAD Library Comparison](CAD_LIBRARY_COMPARISON.md)** - Comprehensive evaluation of CAD backends
-- **[Examples](examples/)** - Proof-of-concept demonstrations
-  - [Build123d POC](examples/build123d_poc.py) - Recommended approach ⭐
-  - [CadQuery POC](examples/cadquery_poc.py) - Alternative backend
-  - [OCP POC](examples/ocp_poc.py) - Educational comparison
+For the package (when available):
 
-## Installation (for testing examples)
+```bash
+pip install marimocad
+```
+
+For testing examples:
 
 ```bash
 pip install build123d marimo
@@ -37,6 +37,54 @@ pip install build123d marimo
 # Optional: For visualization
 pip install ocp-vscode
 ```
+
+## Development
+
+For development, clone the repository and install with development dependencies using [uv](https://docs.astral.sh/uv/) (recommended):
+
+```bash
+git clone https://github.com/tkoyama010/marimocad.git
+cd marimocad
+uv sync
+```
+
+Or using pip:
+
+```bash
+git clone https://github.com/tkoyama010/marimocad.git
+cd marimocad
+pip install -e ".[dev]"
+```
+
+### Code Quality
+
+This project uses [Ruff](https://docs.astral.sh/ruff/) for linting and formatting with a comprehensive set of rules enabled.
+
+Run linting:
+```bash
+ruff check .
+```
+
+Run formatting:
+```bash
+ruff format .
+```
+
+### Pre-commit Hooks
+
+Install pre-commit hooks to automatically check code quality before commits:
+
+```bash
+pre-commit install
+```
+
+## Research Documentation
+
+- **[CAD Library Comparison](CAD_LIBRARY_COMPARISON.md)** - Comprehensive evaluation of CAD backends
+- **[Examples](examples/)** - Proof-of-concept demonstrations
+  - [Build123d POC](examples/build123d_poc.py) - Recommended approach ⭐
+  - [CadQuery POC](examples/cadquery_poc.py) - Alternative backend
+  - [OCP POC](examples/ocp_poc.py) - Educational comparison
 
 ## Quick Start (POC)
 
@@ -101,11 +149,11 @@ See the [full comparison document](CAD_LIBRARY_COMPARISON.md) for detailed analy
 
 ## Contributing
 
-This project is in early research phase. Contributions welcome!
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on contributing to this project.
 
 ## License
 
-TBD
+MIT License - see LICENSE file for details.
 
 ## Related Projects
 
