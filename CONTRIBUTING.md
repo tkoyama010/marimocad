@@ -8,6 +8,7 @@ Thank you for your interest in contributing to marimocad! This document provides
 
 - Python 3.9 or higher
 - Git
+- [uv](https://docs.astral.sh/uv/) (recommended) or pip
 
 ### Setting Up Your Development Environment
 
@@ -17,18 +18,23 @@ Thank you for your interest in contributing to marimocad! This document provides
    cd marimocad
    ```
 
-2. Create a virtual environment:
+2. Install dependencies using uv (recommended):
+   ```bash
+   # Install uv if you haven't already
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   
+   # Sync dependencies
+   uv sync
+   ```
+   
+   Or using pip:
    ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. Install the package in development mode with dev dependencies:
-   ```bash
    pip install -e ".[dev]"
    ```
 
-4. Install pre-commit hooks:
+3. Install pre-commit hooks:
    ```bash
    pre-commit install
    ```

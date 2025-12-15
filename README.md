@@ -10,7 +10,15 @@ pip install marimocad
 
 ## Development
 
-For development, clone the repository and install with development dependencies:
+For development, clone the repository and install with development dependencies using [uv](https://docs.astral.sh/uv/) (recommended):
+
+```bash
+git clone https://github.com/tkoyama010/marimocad.git
+cd marimocad
+uv sync
+```
+
+Or using pip:
 
 ```bash
 git clone https://github.com/tkoyama010/marimocad.git
