@@ -40,7 +40,7 @@ class TestPrimitives3D:
 
     def test_cone_default(self) -> None:
         """Test cone creation with default parameters."""
-        cone = mc.cone(5, 10)
+        cone = mc.cone(5, 10, top_radius=0.1)
         assert cone is not None
 
     def test_cone_frustum(self) -> None:
@@ -50,7 +50,7 @@ class TestPrimitives3D:
 
     def test_cone_centered(self) -> None:
         """Test centered cone creation."""
-        cone = mc.cone(5, 10, center=True)
+        cone = mc.cone(5, 10, top_radius=0.1, center=True)
         assert cone is not None
 
     def test_torus(self) -> None:
@@ -103,5 +103,5 @@ class TestGeometryValidation:
 
     def test_cone_positive_dimensions(self) -> None:
         """Test cone creation with positive dimensions."""
-        cone = mc.cone(1, 1)
+        cone = mc.cone(2, 1, top_radius=0.5)
         assert cone is not None

@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING
 
 from build123d import Axis, Location, Plane, Rotation, Vector
 
+
 if TYPE_CHECKING:
     from marimocad._types import Geometry
 
@@ -79,14 +80,17 @@ def rotate(
     # Create rotation
     rotation = Rotation(axis_vector, angle)
 
-    # Create location with rotation
-    if center is None:
-        loc = Location(Vector(0, 0, 0), rotation)
-    else:
+    # If center is specified, need to translate, rotate, translate back
+    if center is not None:
         center_vec = Vector(*center)
-        loc = Location(center_vec, rotation)
+        # Move to origin
+        geom = geom.moved(Location(-center_vec))
+        # Rotate
+        geom = geom.moved(rotation)
+        # Move back
+        return geom.moved(Location(center_vec))
 
-    return geom.moved(loc)
+    return geom.moved(rotation)
 
 
 def scale(

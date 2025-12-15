@@ -8,10 +8,12 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from build123d import Axis, Vector, extrude as b3d_extrude
+from build123d import Axis, Vector
+from build123d import extrude as b3d_extrude
 from build123d import loft as b3d_loft
 from build123d import revolve as b3d_revolve
 from build123d import sweep as b3d_sweep
+
 
 if TYPE_CHECKING:
     from marimocad._types import Face, Solid, Wire
@@ -39,12 +41,9 @@ def extrude(
         >>> circle = mc.circle(5)
         >>> cylinder = mc.extrude(circle, 10)
     """
-    dir_vec = Vector(*direction).normalized()
-    amount = dir_vec * distance
-
     if taper != 0:
-        return b3d_extrude(face, amount=amount, taper=taper)
-    return b3d_extrude(face, amount=amount)
+        return b3d_extrude(face, amount=distance, dir=Vector(*direction), taper=taper)
+    return b3d_extrude(face, amount=distance, dir=Vector(*direction))
 
 
 def revolve(

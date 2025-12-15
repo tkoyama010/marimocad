@@ -7,17 +7,16 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from build123d import Align
+from build123d import Align, Location, Vector
 from build123d import Box as B3DBox
 from build123d import Circle as B3DCircle
 from build123d import Cone as B3DCone
 from build123d import Cylinder as B3DCylinder
-from build123d import Location
 from build123d import Polygon as B3DPolygon
 from build123d import Rectangle as B3DRectangle
 from build123d import Sphere as B3DSphere
 from build123d import Torus as B3DTorus
-from build123d import Vector
+
 
 if TYPE_CHECKING:
     from marimocad._types import Face, Solid
@@ -100,7 +99,7 @@ def cylinder(
 def cone(
     radius: float,
     height: float,
-    top_radius: float = 0.0,
+    top_radius: float = 0.1,
     *,
     center: bool = False,
 ) -> Solid:
@@ -109,7 +108,7 @@ def cone(
     Args:
         radius: Bottom radius
         height: Cone height along Z axis
-        top_radius: Top radius (0 for cone, >0 for frustum)
+        top_radius: Top radius (small positive for cone, larger for frustum)
         center: Center the cone at origin if True
 
     Returns:
@@ -117,7 +116,7 @@ def cone(
 
     Example:
         >>> import marimocad as mc
-        >>> cone = mc.cone(5, 10)
+        >>> cone = mc.cone(5, 10, top_radius=0.1)
         >>> frustum = mc.cone(5, 10, top_radius=2)
     """
     if center:
