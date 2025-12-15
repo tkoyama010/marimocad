@@ -99,8 +99,8 @@ rotated_custom = mc.rotate(box, angle=30, axis=(1, 1, 0))
 
 # Rotate around a specific point
 rotated_centered = mc.rotate(
-    box, 
-    angle=45, 
+    box,
+    angle=45,
     axis="Z",
     center=(10, 5, 2.5)
 )
@@ -492,11 +492,11 @@ def create_bottle(height, radius, neck_radius, neck_height):
     """Create a parametric bottle."""
     # Body
     body = mc.cylinder(radius=radius, height=height - neck_height)
-    
+
     # Neck
     neck = mc.cylinder(radius=neck_radius, height=neck_height)
     neck = mc.translate(neck, z=height - neck_height)
-    
+
     return mc.union(body, neck)
 
 # Create UI
@@ -573,25 +573,25 @@ def create_bracket(
     fillet_radius: float = 2,
 ):
     """Create a mounting bracket."""
-    
+
     # Base plate
     base = mc.box(base_length, base_width, base_height)
-    
+
     # Vertical wall
     wall = mc.box(wall_thickness, base_width, wall_height)
     wall = mc.translate(wall, z=base_height)
-    
+
     # Combine
     bracket = mc.union(base, wall)
-    
+
     # Add mounting holes in base
     hole1 = mc.cylinder(radius=hole_diameter / 2, height=base_height * 2)
     hole1 = mc.translate(hole1, x=10, y=base_width / 2, z=-base_height / 2)
-    
+
     hole2 = mc.translate(hole1, x=base_length - 20)
-    
+
     bracket = mc.subtract(bracket, hole1, hole2)
-    
+
     # Add holes in wall
     wall_hole = mc.cylinder(radius=hole_diameter / 2, height=wall_thickness * 2)
     wall_hole = mc.rotate(wall_hole, angle=90, axis="Y")
@@ -601,12 +601,12 @@ def create_bracket(
         y=base_width / 2,
         z=base_height + wall_height / 2
     )
-    
+
     bracket = mc.subtract(bracket, wall_hole)
-    
+
     # Add fillets
     bracket = mc.fillet(bracket, radius=fillet_radius)
-    
+
     return bracket
 
 # Create bracket
@@ -630,13 +630,13 @@ def create_enclosure(
     corner_radius: float = 5,
 ):
     """Create an electronics enclosure."""
-    
+
     # Outer shell
     outer = mc.box(length, width, height)
-    
+
     # Round corners
     outer = mc.fillet(outer, radius=corner_radius)
-    
+
     # Create cavity
     cavity = mc.box(
         length - 2 * wall_thickness,
@@ -649,25 +649,25 @@ def create_enclosure(
         y=wall_thickness,
         z=wall_thickness
     )
-    
+
     # Shell it
     enclosure = mc.subtract(outer, cavity)
-    
+
     # Add mounting posts
     post = mc.cylinder(radius=3, height=height - wall_thickness)
     post = mc.translate(post, z=wall_thickness)
-    
+
     post_positions = [
         (10, 10, 0),
         (length - 10, 10, 0),
         (10, width - 10, 0),
         (length - 10, width - 10, 0),
     ]
-    
+
     for x, y, z in post_positions:
         positioned_post = mc.translate(post, x=x, y=y)
         enclosure = mc.union(enclosure, positioned_post)
-    
+
     return enclosure
 
 # Create enclosure
@@ -682,35 +682,35 @@ import marimocad as mc
 
 def create_gearbox():
     """Create a simple gearbox assembly."""
-    
+
     # Housing
     housing = mc.box(120, 80, 60)
     housing = mc.fillet(housing, radius=5)
-    
+
     # Cavity
     cavity = mc.box(110, 70, 50)
     cavity = mc.translate(cavity, x=5, y=5, z=5)
     housing = mc.subtract(housing, cavity)
-    
+
     # Gears
     gear1 = mc.gear(num_teeth=20, module=2, thickness=15)
     gear1 = mc.translate(gear1, x=30, y=40, z=30)
-    
+
     gear2 = mc.gear(num_teeth=40, module=2, thickness=15)
     gear2 = mc.translate(gear2, x=70, y=40, z=30)
-    
+
     # Shafts
     shaft1 = mc.cylinder(radius=5, height=60)
     shaft1 = mc.rotate(shaft1, angle=90, axis="Y")
     shaft1 = mc.translate(shaft1, x=30, y=40, z=30)
-    
+
     shaft2 = mc.cylinder(radius=5, height=60)
     shaft2 = mc.rotate(shaft2, angle=90, axis="Y")
     shaft2 = mc.translate(shaft2, x=70, y=40, z=30)
-    
+
     # Combine
     assembly = mc.union(housing, gear1, gear2, shaft1, shaft2)
-    
+
     return assembly
 
 # Create and display

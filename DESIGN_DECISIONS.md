@@ -266,7 +266,7 @@ class Geometry(ABC):
 class WrappedBuild123dGeometry(Geometry):
     def __init__(self, build123d_obj):
         self._obj = build123d_obj  # Need to wrap everything
-    
+
     def bounding_box(self):
         return self._obj.bounding_box()  # Delegate to wrapped object
 ```

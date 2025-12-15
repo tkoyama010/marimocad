@@ -202,14 +202,14 @@ class Vertex(Geometry):
 ```python
 class Build123dBackend:
     """Primary backend using Build123d."""
-    
+
     def create_box(self, length, width, height, center):
         """Create box using Build123d."""
         from build123d import Box, BuildPart
         with BuildPart() as part:
             Box(length, width, height)
         return self._wrap(part.part)
-    
+
     def union(self, *geoms):
         """Union operation using Build123d."""
         # Implementation
@@ -225,7 +225,7 @@ class Build123dBackend:
 ```python
 class CadQueryBackend:
     """Alternative backend using CadQuery."""
-    
+
     def create_box(self, length, width, height, center):
         """Create box using CadQuery."""
         import cadquery as cq
@@ -450,7 +450,7 @@ Viewer system supports plugins:
 ```python
 class CustomViewer:
     """Custom visualization plugin."""
-    
+
     def render(self, geometry):
         """Render geometry."""
         # Custom rendering logic
