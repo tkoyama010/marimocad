@@ -1,1 +1,1 @@
-"""marimocad Documentation"""
+"""Tests for marimocad package."""

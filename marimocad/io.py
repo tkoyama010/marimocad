@@ -74,7 +74,7 @@ def detect_format(filepath: Union[str, Path]) -> FileFormat:
                     actual_size = filepath.stat().st_size
                     if actual_size == expected_size:
                         return FileFormat.STL
-                except:
+                except (struct.error, ValueError, IndexError):
                     pass
         
         # Check for ASCII STL
