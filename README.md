@@ -1,5 +1,11 @@
 # marimocad
 
+[![Tests](https://github.com/tkoyama010/marimocad/actions/workflows/test.yml/badge.svg)](https://github.com/tkoyama010/marimocad/actions/workflows/test.yml)
+[![Lint](https://github.com/tkoyama010/marimocad/actions/workflows/lint.yml/badge.svg)](https://github.com/tkoyama010/marimocad/actions/workflows/lint.yml)
+[![Build](https://github.com/tkoyama010/marimocad/actions/workflows/build.yml/badge.svg)](https://github.com/tkoyama010/marimocad/actions/workflows/build.yml)
+[![PyPI version](https://badge.fury.io/py/marimocad.svg)](https://badge.fury.io/py/marimocad)
+[![Python versions](https://img.shields.io/pypi/pyversions/marimocad.svg)](https://pypi.org/project/marimocad/)
+
 CAD tools for marimo notebooks - Interactive 3D modeling and computational geometry.
 
 ## Status
@@ -113,15 +119,29 @@ marimo edit examples/build123d_poc.py
 
 ## Testing
 
-The example code is tested automatically via GitHub Actions CI. You can also run tests locally:
+### Running Tests Locally
 
 ```bash
 # Install dependencies
-pip install build123d cadquery marimo
+pip install -e ".[dev]"
 
 # Run tests
-python tests/test_examples.py
+pytest tests/ -v
+
+# Run with coverage
+pytest tests/ --cov=marimocad --cov-report=term-missing
 ```
+
+### Continuous Integration
+
+The project uses GitHub Actions for automated testing and quality assurance:
+
+- **Tests**: Runs on every push and PR across multiple OS (Linux, macOS, Windows) and Python versions (3.9-3.12)
+- **Linting**: Automatic code quality checks with ruff and mypy
+- **Build**: Verifies package builds correctly and can be installed
+- **Security**: CodeQL security scanning runs weekly
+
+All workflows must pass before merging to main.
 
 See [tests/README.md](tests/README.md) for more details on testing.
 
@@ -181,6 +201,8 @@ See the [full comparison document](CAD_LIBRARY_COMPARISON.md) for detailed analy
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on contributing to this project.
+
+For maintainers, see [RELEASE_GUIDE.md](RELEASE_GUIDE.md) for information on creating releases and publishing to PyPI.
 
 ## License
 
