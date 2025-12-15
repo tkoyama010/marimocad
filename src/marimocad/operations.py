@@ -95,40 +95,40 @@ def rotate(
 
 def scale(
     geom: Geometry,
-    factor: float | tuple[float, float, float],
+    factor: float,
     center: tuple[float, float, float] | None = None,
 ) -> Geometry:
-    """Scale geometry uniformly or non-uniformly.
+    """Scale geometry uniformly.
 
     Args:
         geom: Geometry to scale
-        factor: Scale factor (uniform) or (x, y, z) factors
+        factor: Uniform scale factor
         center: Center of scaling (origin if None)
 
     Returns:
         Scaled geometry
 
+    Note:
+        Currently only uniform scaling is supported due to backend limitations.
+        Non-uniform scaling may be added in a future version.
+
     Example:
         >>> import marimocad as mc
         >>> box = mc.box(10, 10, 10)
         >>> bigger = mc.scale(box, 2.0)
-        >>> stretched = mc.scale(box, (1, 2, 0.5))
     """
     center_vec = Vector(0, 0, 0) if center is None else Vector(*center)
-
-    # Parse scale factor
-    scale_vec = (factor, factor, factor) if isinstance(factor, (int, float)) else factor
 
     # Move to origin, scale, move back
     if center is not None:
         # Translate to origin
         translated = geom.moved(Location(Vector(-center_vec.X, -center_vec.Y, -center_vec.Z)))
         # Scale
-        scaled = translated.scale(scale_vec[0])
+        scaled = translated.scale(factor)
         # Translate back
         return scaled.moved(Location(center_vec))
 
-    return geom.scale(scale_vec[0])
+    return geom.scale(factor)
 
 
 def mirror(
