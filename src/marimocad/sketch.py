@@ -127,27 +127,27 @@ class Sketch:
         self._workplane = self._workplane.lineTo(x, y)
         return self
 
-    def arc(
-        self, end_point: Tuple[float, float], radius: float, sense: int = 1
-    ) -> "Sketch":
+    def arc(self, end_point: Tuple[float, float], radius: float) -> "Sketch":
         """
         Draw an arc from the current point.
 
         Args:
             end_point: End point of the arc as (x, y)
-            radius: Radius of the arc
-            sense: 1 for counter-clockwise, -1 for clockwise
+            radius: Radius of the arc (positive for convex, negative for concave)
 
         Returns:
             Self for method chaining
 
         Raises:
-            ValueError: If radius <= 0
-        """
-        if radius <= 0:
-            raise ValueError("Radius must be positive")
+            ValueError: If radius is 0
 
-        # Convert sense to boolean (CadQuery uses forConstruction parameter)
+        Note:
+            The direction of the arc is determined by the sign of the radius.
+            Positive radius creates a convex arc, negative creates a concave arc.
+        """
+        if radius == 0:
+            raise ValueError("Radius cannot be zero")
+
         self._workplane = self._workplane.radiusArc(end_point, radius)
         return self
 

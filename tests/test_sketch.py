@@ -148,7 +148,7 @@ class TestSketchArc:
     def test_arc_invalid_radius(self):
         """Test that invalid radius raises ValueError."""
         sketch = Sketch()
-        with pytest.raises(ValueError, match="must be positive"):
+        with pytest.raises(ValueError, match="cannot be zero"):
             sketch.arc((10, 10), 0)
 
 

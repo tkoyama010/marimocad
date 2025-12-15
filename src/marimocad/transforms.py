@@ -8,6 +8,8 @@ translation, rotation, and scaling operations.
 from typing import Tuple
 
 import cadquery as cq
+from OCP.BRepBuilderAPI import BRepBuilderAPI_GTransform
+from OCP.gp import gp_GTrsf
 
 
 def translate(
@@ -100,25 +102,17 @@ def scale(
     if x <= 0 or y <= 0 or z <= 0:
         raise ValueError("All scale factors must be positive")
 
-    # CadQuery doesn't have a direct scale method, so we need to use a transformation matrix
-    # For uniform scaling, we can use the scale parameter in various operations
-    # For now, we'll create a scaled version using a workaround
-
     # Get all solids from the workplane
     solids = workplane.solids().vals()
 
     if not solids:
         raise ValueError("Workplane contains no solids to scale")
 
-    # For each solid, we need to scale it
-    # CadQuery's transformGeometry with a scale matrix
+    # Apply scaling using OpenCASCADE's general transformation matrix
+    # This allows non-uniform scaling which CadQuery doesn't directly support
     result = cq.Workplane("XY")
 
     for solid in solids:
-        # Create a transformation matrix for scaling
-        from OCP.BRepBuilderAPI import BRepBuilderAPI_GTransform
-        from OCP.gp import gp_GTrsf
-
         # Create a general transformation with scale
         gtrsf = gp_GTrsf()
         gtrsf.SetValue(1, 1, x)

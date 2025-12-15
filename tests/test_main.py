@@ -1,7 +1,6 @@
 """Tests for main module imports."""
 
 
-
 class TestImports:
     """Test that all main exports are available."""
 
