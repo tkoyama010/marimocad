@@ -142,14 +142,14 @@ def create_box(length, width, height):
 
 #### Build123d ⭐⭐⭐⭐⭐
 **Pros:**
-- Built-in `_repr_mimebundle_()` support
-- Native ocp-vscode integration
+- Built-in `_repr_html_()` support for notebook rendering
+- Native ocp-vscode integration available
 - Excellent support for interactive environments
-- Works seamlessly with show_object()
+- Works seamlessly with show_object() from ocp-vscode
 - Best-in-class Jupyter/notebook integration
 
 **Cons:**
-- Still requires viewer setup
+- Requires ocp-vscode for 3D visualization (optional)
 
 **Integration Pattern:**
 ```python
