@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "marimocad"
-version = "0.1.0"
+dynamic = ["version"]
 description = "CAD tools for marimo notebooks"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -42,6 +42,9 @@ Homepage = "https://github.com/tkoyama010/marimocad"
 Documentation = "https://github.com/tkoyama010/marimocad#readme"
 Repository = "https://github.com/tkoyama010/marimocad"
 Issues = "https://github.com/tkoyama010/marimocad/issues"
+
+[tool.hatch.version]
+path = "src/marimocad/__init__.py"
 
 [tool.hatch.build.targets.sdist]
 include = [

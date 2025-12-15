@@ -10,6 +10,8 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -36,7 +38,6 @@ jobs:
     - name: Type check with mypy
       run: |
         mypy src/marimocad
-      continue-on-error: true
 
     - name: Test with pytest
       run: |
@@ -52,6 +53,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: test
+    permissions:
+      contents: read
 
     steps:
     - uses: actions/checkout@v4
