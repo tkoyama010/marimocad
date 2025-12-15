@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: '0 0 * * 1'  # Run weekly on Mondays
+    - cron: '0 0 * * 1'  # Run weekly on Mondays at 00:00 UTC
 
 jobs:
   codeql:
