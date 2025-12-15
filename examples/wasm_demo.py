@@ -203,7 +203,7 @@ def __(
 
             > 💡 In a full environment, these models would be rendered in 3D
             """
-        except Exception as e:
+        except (AttributeError, RuntimeError, ValueError) as e:
             geometry_status = f"⚠️ Error creating geometry: {e}"
             demo_box = None
             demo_cylinder = None
