@@ -23,7 +23,7 @@ We provide a simplified WASM-optimized example at `examples/wasm_demo.py` that d
 
 ### Try the Live Demo
 
-**🌐 [Live WASM Demo](https://tkoyama010.github.io/marimocad/)** *(will be available after deployment)*
+**🌐 [Live WASM Demo](https://tkoyama010.github.io/marimocad/)**
 
 ## Running Locally
 
