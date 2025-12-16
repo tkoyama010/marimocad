@@ -28,7 +28,6 @@ classifiers = [
 dependencies = [
     "build123d>=0.8.0",
     "marimo>=0.1.0",
-    "ocp-vscode>=2.5.3",
 ]
 
 [project.optional-dependencies]

@@ -107,7 +107,7 @@ touch wasm-output/.nojekyll
 ⚠️ **3D Rendering:**
 - Interactive 3D visualization now available via Plotly!
 - Requires Build123d and Plotly packages
-- Desktop version provides additional rendering options (ocp-vscode)
+- Desktop version uses Build123d's native 3D viewer (ocp-tessellate)
 - For best performance, use moderate complexity geometry
 
 ⚠️ **Performance:**

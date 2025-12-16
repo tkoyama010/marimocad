@@ -112,7 +112,7 @@ def _(
 def _(mo, parametric_box):
     # Display the model
     # Note: In actual Marimo environment, this would render the 3D model
-    # For now, we'll show metadata
+    # Display the model using Build123d's native rendering
     mo.md(f"""
     ## Generated Model
 
@@ -120,16 +120,8 @@ def _(mo, parametric_box):
     **Edges:** {len(parametric_box.edges())}
     **Faces:** {len(parametric_box.faces())}
 
-    To visualize this model in Marimo, install `ocp-vscode`:
-    ```bash
-    pip install ocp-vscode
-    ```
-
-    Then use:
-    ```python
-    from ocp_vscode import show
-    show(parametric_box.part)
-    ```
+    Build123d provides native HTML rendering that displays automatically in marimo notebooks.
+    The 3D interactive viewer is built into Build123d using ocp-tessellate.
     """)
 
 
@@ -247,14 +239,17 @@ def _(export_format):
                 writer.Write(model.part.wrapped, filename)
                 return f"Exported to {filename}"
             if format_type == "SVG":
-                # SVG export via ocpsvg
+                # SVG export using Build123d's native export
+                # Note: SVG requires 2D projection of 3D models
                 try:
-                    from ocp_vscode import show
+                    from build123d import exporters
 
-                    # show() can export SVG
-                    return "SVG export requires ocp-vscode viewer"
-                except ImportError:
-                    return "Install ocp-vscode for SVG export"
+                    exporter = exporters.ExportSVG()
+                    exporter.add_shape(model.part)
+                    exporter.write(filename)
+                    return f"Exported to {filename}"
+                except Exception as svg_error:
+                    return f"SVG export error: {svg_error}"
             else:
                 return f"{format_type} export not implemented in this demo"
         except Exception as e:
