@@ -16,19 +16,44 @@ app = marimo.App(width="medium")
 
 
 @app.cell
-def __():
+def _():
     import marimo as mo
 
     return (mo,)
 
 
 @app.cell
-def __():
-    return
+def _():
+    # Import Build123d components
+    from build123d import (
+        Axis,
+        Box,
+        BuildPart,
+        Cylinder,
+        GridLocations,
+        Hole,
+        Locations,
+        Mode,
+        Plane,
+        fillet,
+    )
+
+    return (
+        Axis,
+        Box,
+        BuildPart,
+        Cylinder,
+        GridLocations,
+        Hole,
+        Locations,
+        Mode,
+        Plane,
+        fillet,
+    )
 
 
 @app.cell
-def __(mo):
+def _(mo):
     # Interactive controls for parametric modeling
     mo.md("""
     # Build123d Parametric CAD Demo
@@ -39,7 +64,7 @@ def __(mo):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     # Create reactive parameters
     length = mo.ui.slider(start=10, stop=50, value=30, label="Length")
     width = mo.ui.slider(start=10, stop=50, value=20, label="Width")
@@ -52,8 +77,18 @@ def __(mo):
 
 
 @app.cell
-def __(
-    BuildPart, Box, Hole, Locations, fillet, fillet_radius, height, hole_diameter, length, width
+def _(
+    Axis,
+    Box,
+    BuildPart,
+    Hole,
+    Locations,
+    fillet,
+    fillet_radius,
+    height,
+    hole_diameter,
+    length,
+    width,
 ):
     # Create parametric box with hole
     with BuildPart() as parametric_box:
@@ -70,11 +105,11 @@ def __(
             edges = parametric_box.edges().filter_by(Axis.Z)
             if edges:
                 fillet(edges, fillet_radius.value)
-    return edges, parametric_box, top_face
+    return (parametric_box,)
 
 
 @app.cell
-def __(mo, parametric_box):
+def _(mo, parametric_box):
     # Display the model
     # Note: In actual Marimo environment, this would render the 3D model
     # For now, we'll show metadata
@@ -99,14 +134,14 @@ def __(mo, parametric_box):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md("""
     ## More Complex Example: Parametric Bracket
     """)
 
 
 @app.cell
-def __(mo):
+def _(mo):
     # Parameters for bracket
     bracket_length = mo.ui.slider(start=20, stop=100, value=50, label="Bracket Length")
     bracket_thickness = mo.ui.slider(start=2, stop=10, value=5, label="Thickness")
@@ -117,7 +152,7 @@ def __(mo):
 
 
 @app.cell
-def __(
+def _(
     Axis,
     Box,
     BuildPart,
@@ -130,7 +165,6 @@ def __(
     bracket_length,
     bracket_thickness,
     fillet,
-    math,
     mounting_holes,
 ):
     # Create parametric bracket
@@ -160,17 +194,11 @@ def __(
                 fillet(edges_to_fillet, bracket_thickness.value / 2)
             except Exception:
                 pass  # Some edges might not be filleted
-    return (
-        base_plate,
-        bracket,
-        edges_to_fillet,
-        hole_spacing,
-        vertical_plate,
-    )
+    return (bracket,)
 
 
 @app.cell
-def __(bracket, mo):
+def _(bracket, mo):
     mo.md(f"""
     ## Bracket Model
 
@@ -181,7 +209,7 @@ def __(bracket, mo):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md("""
     ## Export Options
 
@@ -190,7 +218,7 @@ def __(mo):
 
 
 @app.cell
-def __(mo):
+def _(mo):
     export_format = mo.ui.dropdown(
         options=["STEP", "STL", "SVG", "DXF", "VRML"], value="STEP", label="Export Format"
     )
@@ -199,7 +227,7 @@ def __(mo):
 
 
 @app.cell
-def __(bracket, export_format):
+def _(export_format):
     # Export functionality
     def export_model(model, format_type, filename):
         """Export model to specified format"""
@@ -235,11 +263,10 @@ def __(bracket, export_format):
     # Example: export_model(bracket, export_format.value, f"bracket.{export_format.value.lower()}")
     export_info = f"Selected format: {export_format.value}"
     export_info
-    return export_info, export_model
 
 
 @app.cell
-def __(mo):
+def _(mo):
     mo.md("""
     ## Summary
 
@@ -269,6 +296,13 @@ def __(mo):
     4. Implement assembly support
     5. Add constraint solver integration
     """)
+
+
+@app.cell
+def _(parametric_box):
+    # Display the 3D model using build123d's native rendering
+    # Build123d objects can be displayed directly in marimo
+    parametric_box.part
 
 
 if __name__ == "__main__":
