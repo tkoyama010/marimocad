@@ -305,7 +305,5 @@ def _(parametric_box):
     parametric_box.part
 
 
-
-
 if __name__ == "__main__":
     app.run()
