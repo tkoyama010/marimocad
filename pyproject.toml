@@ -129,6 +129,17 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "D104",  # Missing docstring in public package
     "F401",  # Imported but unused
 ]
+"src/marimocad/marimo.py" = [
+    "BLE001",  # Do not catch blind exception (user geometry can raise any error)
+    "PERF203", # Try-except in loop (necessary for robustness with multiple geometries)
+    "PLC0415", # Import should be at top-level (marimo is optional dependency)
+]
+"src/marimocad/viewer.py" = [
+    "FBT003",  # Boolean positional value (OCP API requires this)
+    "PLC0415", # Import should be at top-level (optional dependencies)
+    "RET504",  # Unnecessary assignment (improves readability)
+    "SIM108",  # Use ternary (current form more readable)
+]
 "tests/**/*.py" = [
     "ANN001",  # Missing type annotation for function argument
     "ANN201",  # Missing return type annotation for public function

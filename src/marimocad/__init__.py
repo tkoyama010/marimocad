@@ -24,4 +24,8 @@ Example:
 
 __version__ = "0.1.dev0"
 
-__all__ = ["__version__"]
+# Import viewer components for public API
+from marimocad.marimo import GeometryCard, parametric_model, viewer
+
+
+__all__ = ["GeometryCard", "__version__", "parametric_model", "viewer"]
