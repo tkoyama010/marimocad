@@ -35,6 +35,8 @@ def extract_mesh_data(part: Part) -> tuple[np.ndarray, np.ndarray]:
         ImportError: If required OCP modules are not available.
         ValueError: If the part cannot be tessellated.
     """
+    # Import OCP modules locally to handle optional dependencies gracefully
+    # These heavy dependencies may not be available in all environments
     # ruff: noqa: PLC0415
     from OCP.BRep import BRep_Tool
     from OCP.BRepMesh import BRepMesh_IncrementalMesh

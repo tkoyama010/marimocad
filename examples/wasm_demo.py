@@ -221,9 +221,14 @@ def __(
                     )
 
                     visualization_available = True
-                except (AttributeError, ImportError, RuntimeError, ValueError) as e:
+                except ImportError as e:
+                    # Handle missing dependencies
                     visualization_available = False
-                    viz_error = str(e)
+                    viz_error = f"Import error: {e}"
+                except (AttributeError, RuntimeError, ValueError) as e:
+                    # Handle visualization-specific errors
+                    visualization_available = False
+                    viz_error = f"Visualization error: {e}"
             else:
                 visualization_available = False
                 viz_error = "Plotly not available"
