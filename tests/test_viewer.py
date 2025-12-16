@@ -2,7 +2,7 @@
 
 import unittest
 
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import Mock, patch
 
 
 class TestViewer(unittest.TestCase):
