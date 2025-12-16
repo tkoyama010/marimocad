@@ -6,7 +6,7 @@ import pytest
 from build123d import Box, BuildPart, Cylinder
 
 
-def test_extract_mesh_data_box():
+def test_extract_mesh_data_box() -> None:
     """Test mesh extraction from a simple box."""
     from marimocad.visualization import extract_mesh_data
 
@@ -28,7 +28,7 @@ def test_extract_mesh_data_box():
     assert len(triangles) >= 12
 
 
-def test_extract_mesh_data_cylinder():
+def test_extract_mesh_data_cylinder() -> None:
     """Test mesh extraction from a cylinder."""
     from marimocad.visualization import extract_mesh_data
 
@@ -48,7 +48,7 @@ def test_extract_mesh_data_cylinder():
     assert len(triangles) > 100
 
 
-def test_create_plotly_figure_basic():
+def test_create_plotly_figure_basic() -> None:
     """Test creating a basic Plotly figure."""
     from marimocad.visualization import create_plotly_figure
 
@@ -69,7 +69,7 @@ def test_create_plotly_figure_basic():
     assert len(mesh_trace.z) > 0
 
 
-def test_create_plotly_figure_with_options():
+def test_create_plotly_figure_with_options() -> None:
     """Test creating a Plotly figure with custom options."""
     from marimocad.visualization import create_plotly_figure
 
@@ -95,7 +95,7 @@ def test_create_plotly_figure_with_options():
     assert len(fig.data) == 1
 
 
-def test_create_plotly_figure_with_edges():
+def test_create_plotly_figure_with_edges() -> None:
     """Test creating a Plotly figure with edge display."""
     from marimocad.visualization import create_plotly_figure
 
@@ -110,7 +110,7 @@ def test_create_plotly_figure_with_edges():
     assert fig.data[1].type == "scatter3d"
 
 
-def test_create_multi_part_figure():
+def test_create_multi_part_figure() -> None:
     """Test creating a figure with multiple parts."""
     from marimocad.visualization import create_multi_part_figure
 
@@ -138,7 +138,7 @@ def test_create_multi_part_figure():
     assert fig.data[1].color == "lightcoral"
 
 
-def test_create_multi_part_figure_empty_list():
+def test_create_multi_part_figure_empty_list() -> None:
     """Test that empty parts list raises ValueError."""
     from marimocad.visualization import create_multi_part_figure
 
@@ -146,7 +146,7 @@ def test_create_multi_part_figure_empty_list():
         create_multi_part_figure([])
 
 
-def test_extract_mesh_data_preserves_dimensions():
+def test_extract_mesh_data_preserves_dimensions() -> None:
     """Test that mesh extraction preserves proper dimensions."""
     from marimocad.visualization import extract_mesh_data
 
