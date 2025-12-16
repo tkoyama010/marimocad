@@ -305,9 +305,6 @@ def _(parametric_box):
     parametric_box.part
 
 
-@app.cell
-def _():
-    return
 
 
 if __name__ == "__main__":
