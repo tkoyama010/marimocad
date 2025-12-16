@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg width="10.09mm" height="10.09mm" viewBox="-5.045 -5.045 10.09 10.09" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <g transform="scale(1,-1)" stroke-linecap="round">
+    <g fill="none" stroke="rgb(0,0,0)" stroke-width="0.09">
+      <path d="M -5.0,-5.0 L -5.0,-5.0 L -5.0,5.0 L -5.0,5.0 L -5.0,-5.0" />
+      <path d="M 5.0,-5.0 L 5.0,-5.0 L 5.0,5.0 L 5.0,5.0 L 5.0,-5.0" />
+      <path d="M -5.0,-5.0 L 5.0,-5.0 L 5.0,-5.0 L -5.0,-5.0 L -5.0,-5.0" />
+      <path d="M 5.0,5.0 L -5.0,5.0 L -5.0,5.0 L 5.0,5.0 L 5.0,5.0" />
+      <path d="M -5.0,-5.0 L -5.0,5.0 L 5.0,5.0 L 5.0,-5.0 L -5.0,-5.0" />
+      <path d="M -5.0,5.0 L -5.0,-5.0 L 5.0,-5.0 L 5.0,5.0 L -5.0,5.0" />
+    </g>
+  </g>
+</svg>

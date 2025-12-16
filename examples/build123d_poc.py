@@ -240,13 +240,13 @@ def _(export_format):
                 return f"Exported to {filename}"
             if format_type == "SVG":
                 # SVG export using Build123d's native export
+                # Note: SVG requires 2D projection of 3D models
                 try:
-                    # Build123d has built-in SVG export via exporters module
                     from build123d import exporters
 
-                    svg_content = exporters.export_svg(model.part)
-                    with open(filename, "w") as f:
-                        f.write(svg_content)
+                    exporter = exporters.ExportSVG()
+                    exporter.add_shape(model.part)
+                    exporter.write(filename)
                     return f"Exported to {filename}"
                 except Exception as svg_error:
                     return f"SVG export error: {svg_error}"
