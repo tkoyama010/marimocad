@@ -129,21 +129,40 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "D104",  # Missing docstring in public package
     "F401",  # Imported but unused
 ]
+"src/marimocad/marimo.py" = [
+    "BLE001",  # Do not catch blind exception (user geometry can raise any error)
+    "PERF203", # Try-except in loop (necessary for robustness with multiple geometries)
+    "PLC0415", # Import should be at top-level (marimo is optional dependency)
+]
+"src/marimocad/viewer.py" = [
+    "FBT003",  # Boolean positional value (OCP API requires this)
+    "PLC0415", # Import should be at top-level (optional dependencies)
+    "RET504",  # Unnecessary assignment (improves readability)
+    "SIM108",  # Use ternary (current form more readable)
+]
 "tests/**/*.py" = [
     "ANN001",  # Missing type annotation for function argument
+    "ANN003",  # Missing type annotation for **kwargs
     "ANN201",  # Missing return type annotation for public function
+    "ANN202",  # Missing return type annotation for private function
     "ARG001",  # Unused function argument
+    "ARG002",  # Unused method argument
     "BLE001",  # Do not catch blind exception (test scripts need broad catching)
     "D100",    # Missing docstring in public module
     "D101",    # Missing docstring in public class
     "D102",    # Missing docstring in public method
     "D103",    # Missing docstring in public function
+    "EM101",   # Exception must not use string literal
     "F841",    # Local variable assigned but never used (test validation)
     "FBT001",  # Boolean positional arg in function definition
-    "PLR2004", # Magic value used in comparison
-    "S101",    # Use of assert detected
     "PLC0415", # Import should be at top-level (test scripts use conditional imports)
+    "PLR2004", # Magic value used in comparison
+    "PT009",   # Use pytest assert instead of unittest (unittest tests are fine)
+    "PT027",   # Use pytest.raises instead of unittest (unittest tests are fine)
+    "S101",    # Use of assert detected
+    "SLF001",  # Private member accessed (testing private members is ok)
     "T201",    # print found (test scripts use print for output)
+    "TRY003",  # Avoid long messages in exception
     "TRY300",  # Consider moving statement to else block (test pattern is fine)
 ]
 "examples/**/*.py" = [
