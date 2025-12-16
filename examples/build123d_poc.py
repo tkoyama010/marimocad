@@ -10,6 +10,7 @@ Build123d is recommended as the primary backend for marimocad due to its:
 
 import marimo
 
+
 __generated_with = "0.18.4"
 app = marimo.App(width="medium")
 
@@ -17,6 +18,7 @@ app = marimo.App(width="medium")
 @app.cell
 def _():
     import marimo as mo
+
     return (mo,)
 
 
@@ -35,6 +37,7 @@ def _():
         Plane,
         fillet,
     )
+
     return (
         Axis,
         Box,
@@ -58,7 +61,6 @@ def _(mo):
     This demonstrates Build123d's integration with Marimo for reactive CAD modeling.
     Adjust the sliders to see the model update in real-time.
     """)
-    return
 
 
 @app.cell
@@ -129,7 +131,6 @@ def _(mo, parametric_box):
     show(parametric_box.part)
     ```
     """)
-    return
 
 
 @app.cell
@@ -137,7 +138,6 @@ def _(mo):
     mo.md("""
     ## More Complex Example: Parametric Bracket
     """)
-    return
 
 
 @app.cell
@@ -206,7 +206,6 @@ def _(bracket, mo):
     **Edges:** {len(bracket.edges())}
     **Faces:** {len(bracket.faces())}
     """)
-    return
 
 
 @app.cell
@@ -216,7 +215,6 @@ def _(mo):
 
     Build123d supports multiple export formats:
     """)
-    return
 
 
 @app.cell
@@ -265,7 +263,6 @@ def _(export_format):
     # Example: export_model(bracket, export_format.value, f"bracket.{export_format.value.lower()}")
     export_info = f"Selected format: {export_format.value}"
     export_info
-    return
 
 
 @app.cell
@@ -299,7 +296,6 @@ def _(mo):
     4. Implement assembly support
     5. Add constraint solver integration
     """)
-    return
 
 
 @app.cell
@@ -307,7 +303,6 @@ def _(parametric_box):
     # Display the 3D model using build123d's native rendering
     # Build123d objects can be displayed directly in marimo
     parametric_box.part
-    return
 
 
 @app.cell
