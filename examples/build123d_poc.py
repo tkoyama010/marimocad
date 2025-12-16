@@ -243,8 +243,9 @@ def _(export_format):
                 try:
                     # Build123d has built-in SVG export via exporters module
                     from build123d import exporters
+
                     svg_content = exporters.export_svg(model.part)
-                    with open(filename, 'w') as f:
+                    with open(filename, "w") as f:
                         f.write(svg_content)
                     return f"Exported to {filename}"
                 except Exception as svg_error:
