@@ -31,9 +31,10 @@ from marimocad.visualization import (
     extract_mesh_data,
 )
 
+
 __all__ = [
     "__version__",
-    "create_plotly_figure",
     "create_multi_part_figure",
+    "create_plotly_figure",
     "extract_mesh_data",
 ]

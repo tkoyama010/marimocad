@@ -8,6 +8,7 @@ The module supports:
 - Plotly 3D mesh visualization
 - Browser-compatible rendering for WASM deployment
 """
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -87,11 +88,13 @@ def extract_mesh_data(part: Part) -> tuple[np.ndarray, np.ndarray]:
                 triangle = triangulation.Triangle(i)
                 n1, n2, n3 = triangle.Get()
                 # Convert from 1-based to 0-based indexing and add offset
-                triangles.append([
-                    n1 - 1 + vertex_offset,
-                    n2 - 1 + vertex_offset,
-                    n3 - 1 + vertex_offset,
-                ])
+                triangles.append(
+                    [
+                        n1 - 1 + vertex_offset,
+                        n2 - 1 + vertex_offset,
+                        n3 - 1 + vertex_offset,
+                    ]
+                )
 
             vertex_offset += triangulation.NbNodes()
 
