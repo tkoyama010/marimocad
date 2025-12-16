@@ -119,7 +119,7 @@ def __(mo):
 
 @app.cell
 def __(mo):
-    # Check if Build123d is available
+    # Check if Build123d and visualization libs are available
     try:
         # Try importing build123d core components
         from build123d import Axis, Box, BuildPart, Cylinder, Location
@@ -139,6 +139,14 @@ def __(mo):
         - Or wait for OCP.wasm integration in Pyodide
         """
 
+    # Check for Plotly
+    try:
+        import plotly.graph_objects as go
+
+        plotly_available = True
+    except ImportError:
+        plotly_available = False
+
     mo.md(build123d_message)
     return (
         Axis,
@@ -148,6 +156,8 @@ def __(mo):
         Location,
         build123d_available,
         build123d_message,
+        go,
+        plotly_available,
     )
 
 
@@ -162,7 +172,9 @@ def __(
     build123d_available,
     cylinder_height,
     cylinder_radius,
+    go,
     mo,
+    plotly_available,
 ):
     if build123d_available:
         try:
@@ -186,20 +198,111 @@ def __(
             - Vertices: {len(demo_cylinder.vertices())}
             - Edges: {len(demo_cylinder.edges())}
             - Faces: {len(demo_cylinder.faces())}
-
-            > 💡 In a full environment, these models would be rendered in 3D
             """
+
+            # Try to create 3D visualization
+            if plotly_available:
+                try:
+                    from marimocad.visualization import create_plotly_figure
+
+                    # Create visualizations for both shapes
+                    box_fig = create_plotly_figure(
+                        demo_box.part,
+                        color="lightblue",
+                        title=f"Parametric Box ({box_length.value}×{box_width.value}×{box_height.value} mm)",
+                        show_edges=False,
+                    )
+
+                    cylinder_fig = create_plotly_figure(
+                        demo_cylinder.part,
+                        color="lightcoral",
+                        title=f"Parametric Cylinder (r={cylinder_radius.value}, h={cylinder_height.value} mm)",
+                        show_edges=False,
+                    )
+
+                    visualization_available = True
+                except ImportError as e:
+                    # Handle missing dependencies
+                    visualization_available = False
+                    viz_error = f"Import error: {e}"
+                except (AttributeError, RuntimeError, ValueError) as e:
+                    # Handle visualization-specific errors
+                    visualization_available = False
+                    viz_error = f"Visualization error: {e}"
+            else:
+                visualization_available = False
+                viz_error = "Plotly not available"
+
         except (AttributeError, RuntimeError, ValueError) as e:
             geometry_status = f"⚠️ Error creating geometry: {e}"
             demo_box = None
             demo_cylinder = None
+            visualization_available = False
+            viz_error = str(e)
+            box_fig = None
+            cylinder_fig = None
     else:
         geometry_status = "⏳ Waiting for Build123d..."
         demo_box = None
         demo_cylinder = None
+        visualization_available = False
+        viz_error = "Build123d not available"
+        box_fig = None
+        cylinder_fig = None
 
     mo.md(geometry_status)
-    return demo_box, demo_cylinder, geometry_status
+    return (
+        box_fig,
+        cylinder_fig,
+        demo_box,
+        demo_cylinder,
+        geometry_status,
+        visualization_available,
+        viz_error,
+    )
+
+
+@app.cell
+def __(mo):
+    mo.md("""
+    ## 🎨 Interactive 3D Visualization
+
+    Below you can see the 3D models rendered interactively in your browser!
+    Use your mouse to rotate, pan, and zoom the models.
+    """)
+
+
+@app.cell
+def __(box_fig, mo, visualization_available):
+    if visualization_available and box_fig is not None:
+        # Display the 3D box with Plotly
+        mo.ui.plotly(box_fig)
+    else:
+        mo.md("""
+        ⚠️ 3D visualization not available.
+
+        Make sure Build123d and Plotly are installed:
+        ```bash
+        pip install build123d plotly
+        ```
+        """)
+
+
+@app.cell
+def __(cylinder_fig, mo, visualization_available):
+    if visualization_available and cylinder_fig is not None:
+        # Display the 3D cylinder with Plotly
+        mo.ui.plotly(cylinder_fig)
+    else:
+        mo.callout(
+            """
+            **Note:** Interactive 3D visualization requires Build123d and Plotly.
+
+            In WASM environments, this may require additional packages.
+            For the best experience, use the desktop version.
+            """,
+            kind="info",
+        )
 
 
 @app.cell
@@ -211,18 +314,19 @@ def __(mo):
     - ✅ Reactive UI controls (sliders, inputs)
     - ✅ Real-time parameter updates
     - ✅ Mathematical calculations
+    - ✅ **Interactive 3D visualization** (with Plotly)
     - ✅ Data visualization
     - ✅ Export calculations
 
     ### What requires desktop?
-    - 🖥️ Full 3D rendering
     - 🖥️ Complex CAD operations
     - 🖥️ Large assemblies
     - 🖥️ File export (STEP, STL, etc.)
+    - 🖥️ Advanced rendering options
 
     ### Performance Tips
     - Keep models simple for browser execution
-    - Use simpler geometry for faster updates
+    - 3D visualization works best with moderate complexity
     - Desktop version is recommended for production work
     """)
 

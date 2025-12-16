@@ -24,4 +24,17 @@ Example:
 
 __version__ = "0.1.dev0"
 
-__all__ = ["__version__"]
+# Import visualization utilities for convenient access
+from marimocad.visualization import (
+    create_multi_part_figure,
+    create_plotly_figure,
+    extract_mesh_data,
+)
+
+
+__all__ = [
+    "__version__",
+    "create_multi_part_figure",
+    "create_plotly_figure",
+    "extract_mesh_data",
+]
