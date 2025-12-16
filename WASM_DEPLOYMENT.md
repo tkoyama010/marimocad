@@ -14,12 +14,14 @@ marimocad supports WebAssembly deployment through [marimo](https://marimo.io/) n
 
 ## WASM Example
 
-We provide a simplified WASM-optimized example at `examples/wasm_demo.py` that demonstrates:
+We provide a WASM-optimized example at `examples/wasm_demo.py` that demonstrates:
 
 - ✅ Reactive parameter controls
 - ✅ Real-time calculations
 - ✅ Interactive UI components
-- ✅ Basic geometry creation (when OCP.wasm is available)
+- ✅ **Interactive 3D visualization** with Plotly
+- ✅ Basic geometry creation (Box, Cylinder)
+- ✅ Parametric modeling with real-time updates
 
 ### Try the Live Demo
 
@@ -31,11 +33,17 @@ We provide a simplified WASM-optimized example at `examples/wasm_demo.py` that d
 
 ```bash
 # Install dependencies
-pip install marimo
+pip install marimo build123d plotly
 
-# Run the WASM demo locally
+# Run the WASM demo locally with full 3D visualization
 marimo edit examples/wasm_demo.py
 ```
+
+The demo includes:
+- **Interactive sliders** for adjusting geometry parameters
+- **Live 3D visualization** using Plotly (rotate, pan, zoom)
+- **Real-time updates** as you change parameters
+- **Geometry metadata** showing vertices, edges, and faces
 
 ### Export to WASM HTML
 
@@ -90,18 +98,22 @@ touch wasm-output/.nojekyll
 ✅ **UI Components:** Sliders, inputs, buttons, charts
 ✅ **Data Processing:** NumPy, Pandas (via Pyodide)
 ✅ **Visualization:** Matplotlib, Altair, Plotly
+✅ **3D Visualization:** Interactive 3D viewing with Plotly (NEW!)
 ✅ **Build123d:** Geometry creation (requires OCP.wasm)
+✅ **Mesh Extraction:** Convert Build123d geometry to triangular meshes
 
 ### Current Limitations
 
 ⚠️ **3D Rendering:**
-- Full 3D visualization requires OCP.wasm integration
-- Currently, the WASM demo shows geometry metadata instead of 3D views
-- Desktop version recommended for visual CAD work
+- Interactive 3D visualization now available via Plotly!
+- Requires Build123d and Plotly packages
+- Desktop version provides additional rendering options (ocp-vscode)
+- For best performance, use moderate complexity geometry
 
 ⚠️ **Performance:**
 - WASM execution is slower than native Python (2-5x overhead)
 - First load requires downloading Pyodide runtime (~10-30 seconds)
+- 3D visualization performs well for moderate complexity models
 - Complex CAD operations may be slow
 
 ⚠️ **File Operations:**
@@ -123,10 +135,56 @@ touch wasm-output/.nojekyll
 - Not yet integrated in standard Pyodide distribution
 - Requires custom Pyodide build or manual package loading
 
+**3D Visualization Solution:**
+- ✅ **Implemented:** Interactive 3D visualization via Plotly
+- ✅ **Works now:** Browser-based 3D rendering without OCP.wasm
+- ✅ **Features:** Rotate, pan, zoom, real-time updates
+- Uses mesh extraction and Plotly's 3D mesh plotting
+
 **Future Plans:**
-- Monitor OCP.wasm development
-- Integrate when stable Pyodide package available
-- Update WASM demo with full 3D rendering
+- Monitor OCP.wasm development for enhanced rendering
+- Continue improving Plotly-based visualization
+- Add more export formats and rendering options
+
+## 3D Visualization Features
+
+The WASM demo now includes full interactive 3D visualization:
+
+### Features
+- **Interactive Controls:** Rotate, pan, zoom with mouse/touch
+- **Real-time Updates:** 3D view updates as you adjust parameters
+- **Multiple Geometries:** View box, cylinder, and combined shapes
+- **High Quality:** Mesh-based rendering with proper lighting
+- **Browser Native:** No plugins or external viewers needed
+
+### Technology Stack
+- **Mesh Extraction:** Build123d → OCP tessellation → NumPy arrays
+- **Visualization:** Plotly 3D mesh plotting
+- **Integration:** Marimo's `mo.ui.plotly()` component
+- **Performance:** Optimized for browser execution
+
+### Usage Example
+
+```python
+from build123d import Box, BuildPart
+from marimocad.visualization import create_plotly_figure
+import marimo as mo
+
+# Create geometry
+with BuildPart() as my_box:
+    Box(10, 10, 10)
+
+# Create 3D figure
+fig = create_plotly_figure(
+    my_box.part,
+    color='lightblue',
+    title='My Box',
+    show_edges=False
+)
+
+# Display in marimo
+mo.ui.plotly(fig)
+```
 
 ## Optimization Tips
 
