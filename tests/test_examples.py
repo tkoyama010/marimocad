@@ -44,7 +44,7 @@ def test_marimo_structure(filepath):
 
     assert "marimo.App" in content, f"File {filepath} is missing marimo.App definition"
     assert "@app.cell" in content, f"File {filepath} is missing @app.cell decorator"
-    
+
     print("  ✓ Valid marimo app structure")
 
 
