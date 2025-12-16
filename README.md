@@ -109,14 +109,37 @@ pre-commit install
 
 ```bash
 # Install dependencies
-pip install build123d marimo
+pip install build123d marimo marimocad
 
 # Run the Build123d proof of concept
 marimo edit examples/build123d_poc.py
 
+# Or try the NEW 3D viewer demo
+marimo edit examples/viewer_demo.py
+
 # Or try the WASM demo locally
 marimo edit examples/wasm_demo.py
 ```
+
+### 📺 3D Visualization ⭐ NEW!
+
+The new 3D viewer provides interactive WebGL-based visualization:
+
+```python
+import marimo as mo
+import marimocad as mc
+from build123d import Box, BuildPart
+
+# Create a parametric box
+length = mo.ui.slider(5, 30, value=10, label="Length")
+with BuildPart() as box:
+    Box(length.value, 10, 10)
+
+# Display with interactive 3D viewer
+mc.viewer(box.part)
+```
+
+See [VIEWER.md](VIEWER.md) for complete documentation.
 
 ## Testing
 
@@ -146,9 +169,15 @@ See [tests/README.md](tests/README.md) for more details on testing.
 - [x] Select primary backend (Build123d)
 - [x] Create proof-of-concept examples
 - [x] Design API and architecture
+- [x] **Implement 3D visualization** ⭐ **NEW!**
+  - [x] Three.js-based interactive viewer
+  - [x] Support for Build123d, CadQuery, and OCP geometries
+  - [x] Camera controls (orbit, pan, zoom)
+  - [x] Multiple geometries with color coding
+  - [x] Selection and highlighting
+  - [x] Grid and axes helpers
 - [ ] Implement marimocad wrapper API
 - [ ] Create component library
-- [ ] Add visualization integration
 - [ ] Implement assembly support
 - [ ] Add constraint solver
 - [ ] Documentation and tutorials
