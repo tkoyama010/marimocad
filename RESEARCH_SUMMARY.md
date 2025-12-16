@@ -80,7 +80,7 @@ Reasons:
 
 ### Phase 1: Core (Build123d)
 - Wrap Build123d in marimocad API
-- Integrate ocp-vscode for visualization
+- Leverage Build123d's native visualization
 - Create reactive wrappers
 - Build component library
 
@@ -118,8 +118,7 @@ All findings have been verified through:
 1. Begin implementation of marimocad wrapper around Build123d
 2. Create component library (screws, gears, bearings, etc.)
 3. Develop Marimo-specific UI components
-4. Implement visualization integration with ocp-vscode
-5. Add documentation and tutorials
+4. Add documentation and tutorials
 
 ## References
 

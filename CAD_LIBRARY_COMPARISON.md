@@ -143,13 +143,12 @@ def create_box(length, width, height):
 #### Build123d ⭐⭐⭐⭐⭐
 **Pros:**
 - Built-in `_repr_html_()` support for notebook rendering
-- Native ocp-vscode integration available
+- Native 3D visualization via ocp-tessellate (included dependency)
 - Excellent support for interactive environments
-- Works seamlessly with show_object() from ocp-vscode
 - Best-in-class Jupyter/notebook integration
 
 **Cons:**
-- Requires ocp-vscode for 3D visualization (optional)
+- None for visualization (native support is complete)
 
 **Integration Pattern:**
 ```python
@@ -198,7 +197,7 @@ def create_box(length, width, height):
 #### Build123d ⭐⭐⭐⭐⭐
 - SVG export via ocpsvg
 - STEP/STL export ✓
-- ocp-vscode (best-in-class)
+- Native 3D viewer (ocp-tessellate included)
 - Native notebook support
 - Multiple export formats
 
@@ -341,7 +340,7 @@ def create_box(length, width, height):
 ### Phase 1: Core Integration
 1. Implement Build123d as primary backend
 2. Create Marimo-specific wrappers for reactivity
-3. Integrate ocp-vscode for visualization
+3. Leverage Build123d's native visualization
 4. Build component library of common shapes
 
 ### Phase 2: Enhanced Features
