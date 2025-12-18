@@ -157,6 +157,52 @@ pytest --cov=marimocad --cov-report=term-missing
 - Keep the README.md up to date
 - Document any new dependencies or setup requirements
 
+## Release Process
+
+Releases are managed through GitHub Actions workflows. Only maintainers can create releases.
+
+### Creating a Release
+
+1. **Prepare the release:**
+   - Ensure all tests pass on the main branch
+   - Update documentation if needed
+   - Review and merge all PRs intended for the release
+
+2. **Trigger the release workflow:**
+   - Go to Actions → Release workflow
+   - Click "Run workflow"
+   - Enter the version number (e.g., `0.1.0`, `1.0.0`)
+   - The workflow will:
+     - Update the version in `src/marimocad/__init__.py`
+     - Create a git tag
+     - Generate release notes
+     - Create a GitHub Release
+
+3. **Publish to PyPI:**
+   - The GitHub Release will automatically trigger the PyPI publish workflow
+   - The package will be built and published to PyPI using trusted publishing
+
+### Testing Releases
+
+Before publishing to PyPI, you can test the release on TestPyPI:
+
+1. Go to Actions → Publish to PyPI workflow
+2. Click "Run workflow"
+3. Select "testpypi" as the target
+4. The package will be published to https://test.pypi.org/project/marimocad/
+
+Test the installation:
+```bash
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ marimocad
+```
+
+### Version Numbering
+
+We follow [Semantic Versioning](https://semver.org/):
+- **Major** (X.0.0): Breaking changes
+- **Minor** (0.X.0): New features, backwards compatible
+- **Patch** (0.0.X): Bug fixes, backwards compatible
+
 ## Questions?
 
 If you have any questions or need help, please open an issue on GitHub.
