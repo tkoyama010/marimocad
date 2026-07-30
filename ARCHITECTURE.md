@@ -82,7 +82,7 @@ This document describes the architecture of marimocad, a CAD library designed fo
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                       Visualization & Export                             │
 │  ┌───────────────────────────────────────────────────────────────────┐  │
-│  │  • ocp-vscode (3D interactive viewer)                             │  │
+│  │  • Build123d native 3D viewer (via ocp-tessellate)               │  │
 │  │  • STEP, STL, SVG exporters                                       │  │
 │  │  • Mesh generation                                                │  │
 │  │  • HTML/Canvas rendering for notebooks                            │  │
@@ -263,8 +263,8 @@ class CadQueryBackend:
 ### 6. Visualization & Export
 
 #### Visualization
-- **ocp-vscode**: Primary 3D viewer with WebGL
-- **Three.js**: Alternative web-based rendering
+- **Build123d native rendering**: Interactive 3D viewer using ocp-tessellate (included with Build123d)
+- **Three.js**: Alternative web-based rendering for WASM deployment
 - **SVG**: 2D projections for documentation
 
 #### Export

@@ -44,9 +44,6 @@ For testing examples:
 
 ```bash
 pip install build123d marimo
-
-# Optional: For visualization
-pip install ocp-vscode
 ```
 
 ## Development

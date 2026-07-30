@@ -90,16 +90,7 @@ pip install build123d marimo
 
 ### Full Installation (All libraries)
 ```bash
-pip install build123d cadquery marimo ocp-vscode
-```
-
-### Optional Visualization
-```bash
-# For Build123d visualization
-pip install ocp-vscode
-
-# For CadQuery visualization
-pip install jupyter-cadquery
+pip install build123d cadquery marimo
 ```
 
 ## Running the Examples

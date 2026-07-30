@@ -576,86 +576,89 @@ result = mc.evaluate(filleted)  # Explicitly compute
 
 ### Decision
 
-Use ocp-vscode as primary 3D viewer with fallback to SVG projections.
+Use Build123d's native HTML rendering for 3D visualization in marimo notebooks.
 
 ### Context
 
 Need to display 3D models in Marimo notebooks. Options:
-1. ocp-vscode (WebGL viewer)
-2. Three.js custom viewer
-3. SVG projections
-4. External applications
+1. Build123d native rendering (via ocp-tessellate)
+2. External viewer packages (ocp-vscode, jupyter-cadquery)
+3. Three.js custom viewer
+4. SVG projections
+5. External applications
 
 ### Rationale
 
-**ocp-vscode chosen because:**
+**Build123d native rendering chosen because:**
 
-1. **Native Integration**
-   - Built for OpenCascade
-   - Works with Build123d
-   - Already installed by users
-   - No extra dependencies
+1. **Built-in Support**
+   - Native `_repr_html_()` method
+   - ocp-tessellate included as Build123d dependency
+   - No additional packages required
+   - Works seamlessly in marimo
 
 2. **Feature Rich**
    - 3D rotation/pan/zoom
-   - Multiple view modes
-   - Measurements
-   - Section views
-   - Assembly explosion
-
-3. **Performance**
-   - WebGL acceleration
-   - Handles large models
-   - Smooth interaction
+   - Interactive WebGL viewer
    - Good rendering quality
+   - Handles complex models
+
+3. **Simplicity**
+   - No external viewer dependencies
+   - Automatic display in notebooks
+   - Zero configuration needed
+   - One less dependency to manage
 
 4. **Notebook Friendly**
-   - Designed for Jupyter/IPython
-   - Works in Marimo
+   - Designed for interactive environments
+   - Works in Marimo out of the box
    - No separate window
    - Inline display
 
-**SVG as Fallback:**
+**SVG as Alternative:**
 - Works without JavaScript
 - Good for documentation
-- Can export images
-- Lighter weight
+- Can export static images
+- Lighter weight for simple views
 
 **Example:**
 ```python
-# 3D viewer (primary)
-box = mc.box(10, 10, 10)
-mc.viewer(box)  # Interactive 3D
+# 3D viewer (automatic)
+import build123d as bd
+box = bd.Box(10, 10, 10)
+box  # Displays interactive 3D view automatically
 
-# 2D projection (fallback)
-mc.viewer(box, mode="svg", view="iso")  # Static SVG
+# SVG export (for documentation)
+from build123d import exporters
+svg = exporters.export_svg(box)
 ```
 
 ### Consequences
 
 **Positive:**
-- Rich 3D visualization
-- Good performance
-- Feature complete
-- Well maintained
+- Zero additional dependencies
+- Rich 3D visualization included
+- Maintained by Build123d team
+- Proven notebook integration
+- Simpler dependency management
 
 **Negative:**
-- Requires JavaScript
-- External dependency
-- May not work in all environments
+- Requires JavaScript (same as any 3D viewer)
+- Limited to Build123d's viewer features
 
 ### Mitigation
 
-- Provide SVG fallback
-- Clear documentation
-- Detect environment capabilities
-- Graceful degradation
+- Provide SVG export for static documentation
+- Clear documentation of visualization capabilities
+- Three.js viewer available for WASM deployment
+- Graceful degradation for environments without JavaScript
 
 ### Alternatives Considered
 
-1. **Custom Three.js viewer**: Rejected - too much work
-2. **VTK**: Rejected - heavyweight
-3. **External apps**: Rejected - poor notebook integration
+1. **ocp-vscode**: Rejected - unnecessary external dependency, Build123d has native support
+2. **Custom Three.js viewer**: Rejected - too much work, use for WASM only
+3. **VTK**: Rejected - heavyweight
+4. **External apps**: Rejected - poor notebook integration
 
 ---
 
