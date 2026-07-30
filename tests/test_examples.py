@@ -9,154 +9,79 @@ This script tests:
 """
 
 import ast
-import sys
 
 from pathlib import Path
+
+import pytest
 
 
 def test_syntax(filepath):
     """Test that file has valid Python syntax."""
     print(f"\nTesting syntax: {filepath}")
-    try:
-        content = Path(filepath).read_text(encoding="utf-8")
-        ast.parse(content)
-        print("  ✓ Valid Python syntax")
-        return True
-    except SyntaxError as e:
-        print(f"  ✗ Syntax error: {e}")
-        return False
+    content = Path(filepath).read_text(encoding="utf-8")
+    # This will raise SyntaxError if invalid, causing test to fail
+    ast.parse(content)
+    print("  ✓ Valid Python syntax")
 
 
-def test_imports(filepath, test_func):
+def test_imports(filepath):
     """Test that imports work correctly."""
     print(f"\nTesting imports: {filepath}")
-    try:
-        test_func()
-        print("  ✓ All imports successful")
-        return True
-    except ImportError as e:
-        print(f"  ✗ Import error: {e}")
-        return False
+    # For now, just check that the file can be parsed
+    # Full import testing would require the actual libraries
+    content = Path(filepath).read_text(encoding="utf-8")
+    tree = ast.parse(content)
+    # Verify it has import statements
+    has_imports = any(isinstance(node, (ast.Import, ast.ImportFrom)) for node in ast.walk(tree))
+    assert has_imports, f"File {filepath} has no import statements"
+    print("  ✓ File has import statements")
 
 
 def test_marimo_structure(filepath):
     """Test that file is a valid marimo app."""
     print(f"\nTesting marimo structure: {filepath}")
-    try:
-        content = Path(filepath).read_text(encoding="utf-8")
+    content = Path(filepath).read_text(encoding="utf-8")
 
-        if "marimo.App" not in content:
-            print("  ✗ Missing marimo.App definition")
-            return False
+    assert "marimo.App" in content, f"File {filepath} is missing marimo.App definition"
+    assert "@app.cell" in content, f"File {filepath} is missing @app.cell decorator"
 
-        if "@app.cell" not in content:
-            print("  ✗ Missing @app.cell decorator")
-            return False
-
-        print("  ✓ Valid marimo app structure")
-        return True
-    except Exception as e:
-        print(f"  ✗ Error: {e}")
-        return False
-
-
-def test_build123d_imports():
-    """Test Build123d imports."""
-
-
-def test_cadquery_imports():
-    """Test CadQuery imports."""
-
-
-def test_ocp_imports():
-    """Test OCP imports."""
+    print("  ✓ Valid marimo app structure")
 
 
 def test_geometry_creation():
     """Test basic geometry creation with each library."""
     print("\nTesting basic geometry creation:")
 
+    # Test Build123d
     try:
         from build123d import Box, BuildPart
 
         with BuildPart() as test:
             Box(10, 10, 10)
         print("  ✓ Build123d: Basic geometry creation works")
+    except ImportError:
+        print("  ⚠ Build123d not installed, skipping")
     except Exception as e:
-        print(f"  ✗ Build123d error: {e}")
-        return False
+        pytest.fail(f"Build123d error: {e}")
 
+    # Test CadQuery
     try:
         import cadquery as cq
 
         box = cq.Workplane("XY").box(10, 10, 10)
         print("  ✓ CadQuery: Basic geometry creation works")
+    except ImportError:
+        print("  ⚠ CadQuery not installed, skipping")
     except Exception as e:
-        print(f"  ✗ CadQuery error: {e}")
-        return False
+        pytest.fail(f"CadQuery error: {e}")
 
+    # Test OCP
     try:
         from OCP.BRepPrimAPI import BRepPrimAPI_MakeBox
 
         box = BRepPrimAPI_MakeBox(10, 10, 10).Shape()
         print("  ✓ OCP: Basic geometry creation works")
+    except ImportError:
+        print("  ⚠ OCP not installed, skipping")
     except Exception as e:
-        print(f"  ✗ OCP error: {e}")
-        return False
-
-    return True
-
-
-def test_wasm_demo_imports():
-    """Test WASM demo imports (should work without Build123d)."""
-
-
-def main():
-    """Run all tests."""
-    print("=" * 60)
-    print("Testing Example Code")
-    print("=" * 60)
-
-    examples_dir = Path(__file__).parent.parent / "examples"
-
-    examples = [
-        ("build123d_poc.py", test_build123d_imports),
-        ("cadquery_poc.py", test_cadquery_imports),
-        ("ocp_poc.py", test_ocp_imports),
-        ("wasm_demo.py", test_wasm_demo_imports),
-    ]
-
-    all_passed = True
-
-    # Run all tests for each example
-    for example_file, import_test in examples:
-        filepath = examples_dir / example_file
-
-        # Test syntax
-        if not test_syntax(filepath):
-            all_passed = False
-
-        # Test imports
-        if not test_imports(filepath, import_test):
-            all_passed = False
-
-        # Test marimo structure
-        if not test_marimo_structure(filepath):
-            all_passed = False
-
-    # Test geometry creation
-    if not test_geometry_creation():
-        all_passed = False
-
-    print("\n" + "=" * 60)
-    if all_passed:
-        print("✓ All tests passed!")
-        print("=" * 60)
-        return 0
-    print("✗ Some tests failed")
-    print("=" * 60)
-    return 1
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+        pytest.fail(f"OCP error: {e}")

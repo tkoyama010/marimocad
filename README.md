@@ -1,5 +1,10 @@
 # marimocad
 
+[![Tests](https://github.com/tkoyama010/marimocad/actions/workflows/test.yml/badge.svg)](https://github.com/tkoyama010/marimocad/actions/workflows/test.yml)
+[![Lint](https://github.com/tkoyama010/marimocad/actions/workflows/lint.yml/badge.svg)](https://github.com/tkoyama010/marimocad/actions/workflows/lint.yml)
+[![Build](https://github.com/tkoyama010/marimocad/actions/workflows/build.yml/badge.svg)](https://github.com/tkoyama010/marimocad/actions/workflows/build.yml)
+[![PyPI version](https://badge.fury.io/py/marimocad.svg)](https://badge.fury.io/py/marimocad)
+[![Python versions](https://img.shields.io/pypi/pyversions/marimocad.svg)](https://pypi.org/project/marimocad/)
 [![WASM Demo](https://img.shields.io/badge/WASM-Live%20Demo-blue?logo=webassembly)](https://tkoyama010.github.io/marimocad/)
 [![GitHub Pages](https://img.shields.io/badge/docs-GitHub%20Pages-green?logo=github)](https://tkoyama010.github.io/marimocad/)
 
@@ -32,22 +37,38 @@ See [CAD_LIBRARY_COMPARISON.md](CAD_LIBRARY_COMPARISON.md) for detailed evaluati
 
 ## Installation
 
-For the package (when available):
+### From PyPI
 
-## Installation
+Install the latest stable release:
 
 ```bash
 pip install marimocad
 ```
 
-For testing examples:
+### With CAD Backend
+
+For full functionality, install with a CAD backend (Build123d recommended):
 
 ```bash
-pip install build123d marimo
+pip install marimocad build123d
+```
+
+### For Development
+
+For testing examples and development:
+
+```bash
+pip install marimocad[dev] build123d marimo
 
 # Optional: For visualization
 pip install ocp-vscode
 ```
+
+### Requirements
+
+- Python 3.9 or higher
+- marimo >= 0.1.0
+- Recommended: build123d for CAD operations
 
 ## Development
 
@@ -120,15 +141,29 @@ marimo edit examples/wasm_demo.py
 
 ## Testing
 
-The example code is tested automatically via GitHub Actions CI. You can also run tests locally:
+### Running Tests Locally
 
 ```bash
 # Install dependencies
-pip install build123d cadquery marimo
+pip install -e ".[dev]"
 
 # Run tests
-python tests/test_examples.py
+pytest tests/ -v
+
+# Run with coverage
+pytest tests/ --cov=marimocad --cov-report=term-missing
 ```
+
+### Continuous Integration
+
+The project uses GitHub Actions for automated testing and quality assurance:
+
+- **Tests**: Runs on every push and PR across multiple OS (Linux, macOS, Windows) and Python versions (3.9-3.12)
+- **Linting**: Automatic code quality checks with ruff and mypy
+- **Build**: Verifies package builds correctly and can be installed
+- **Security**: CodeQL security scanning runs weekly
+
+All workflows must pass before merging to main.
 
 See [tests/README.md](tests/README.md) for more details on testing.
 
@@ -188,6 +223,8 @@ See the [full comparison document](CAD_LIBRARY_COMPARISON.md) for detailed analy
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on contributing to this project.
+
+For maintainers, see [RELEASE_GUIDE.md](RELEASE_GUIDE.md) for information on creating releases and publishing to PyPI.
 
 ## License
 
