@@ -184,10 +184,7 @@ For users who prefer chaining, we provide a fluent wrapper:
 # Optional fluent API
 from marimocad.fluent import Geometry
 
-result = (Geometry(mc.box(10, 10, 10))
-    .fillet(1.0)
-    .translate(x=5)
-    .get())
+result = Geometry(mc.box(10, 10, 10)).fillet(1.0).translate(x=5).get()
 ```
 
 ### Alternatives Considered
@@ -241,14 +238,19 @@ Python 3.8+ supports structural subtyping via `typing.Protocol`, which allows ty
 # Protocol-based (chosen)
 from typing import Protocol
 
+
 class Geometry(Protocol):
     """Any object with these methods is a Geometry."""
+
     def bounding_box(self) -> tuple[tuple[float, float, float], tuple[float, float, float]]: ...
     def center(self) -> tuple[float, float, float]: ...
 
+
 # Build123d objects already satisfy this protocol
 from build123d import Box
+
 box = Box(10, 10, 10)  # This IS a Geometry (duck typing)
+
 
 def translate(geom: Geometry, x: float, y: float, z: float) -> Geometry:
     # Works with any object implementing the protocol
@@ -262,6 +264,7 @@ vs.
 class Geometry(ABC):
     @abstractmethod
     def bounding_box(self): ...
+
 
 class WrappedBuild123dGeometry(Geometry):
     def __init__(self, build123d_obj):
@@ -435,17 +438,22 @@ Operations can fail (invalid parameters, geometric impossibility, etc.). Need to
 class MarimoCADError(Exception):
     """Base exception for all marimocad errors."""
 
+
 class GeometryError(MarimoCADError):
     """Raised when geometry operation fails."""
+
 
 class ParameterError(MarimoCADError):
     """Raised for invalid parameters."""
 
+
 class ExportError(MarimoCADError):
     """Raised when export fails."""
 
+
 class ImportError(MarimoCADError):
     """Raised when import fails."""
+
 
 class ConstraintError(MarimoCADError):
     """Raised when constraint solving fails."""
