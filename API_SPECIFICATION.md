@@ -46,6 +46,7 @@ def box(
         >>> centered_box = mc.box(10, 10, 10, center=True)
     """
 
+
 def sphere(radius: float, center: bool = True) -> Solid:
     """Create a sphere.
 
@@ -59,6 +60,7 @@ def sphere(radius: float, center: bool = True) -> Solid:
     Example:
         >>> sphere = mc.sphere(5.0)
     """
+
 
 def cylinder(
     radius: float,
@@ -78,6 +80,7 @@ def cylinder(
     Example:
         >>> cyl = mc.cylinder(3, 10)
     """
+
 
 def cone(
     radius: float,
@@ -100,6 +103,7 @@ def cone(
         >>> cone = mc.cone(5, 10)
         >>> frustum = mc.cone(5, 10, top_radius=2)
     """
+
 
 def torus(
     major_radius: float,
@@ -132,6 +136,7 @@ def circle(radius: float) -> Face:
         A circular face
     """
 
+
 def rectangle(width: float, height: float) -> Face:
     """Create a rectangular face.
 
@@ -143,6 +148,7 @@ def rectangle(width: float, height: float) -> Face:
         A rectangular face
     """
 
+
 def polygon(points: list[tuple[float, float]]) -> Face:
     """Create a polygon from points.
 
@@ -152,6 +158,7 @@ def polygon(points: list[tuple[float, float]]) -> Face:
     Returns:
         A polygonal face
     """
+
 
 def text(
     text: str,
@@ -197,6 +204,7 @@ def translate(
         >>> moved = mc.translate(box, x=5, y=10)
     """
 
+
 def rotate(
     geom: Geometry,
     angle: float,
@@ -219,6 +227,7 @@ def rotate(
         >>> rotated = mc.rotate(box, 45, axis="Z")
     """
 
+
 def scale(
     geom: Geometry,
     factor: float | tuple[float, float, float],
@@ -239,6 +248,7 @@ def scale(
         >>> bigger = mc.scale(box, 2.0)
         >>> stretched = mc.scale(box, (1, 2, 0.5))
     """
+
 
 def mirror(
     geom: Geometry,
@@ -273,6 +283,7 @@ def union(*geoms: Geometry) -> Geometry:
         >>> combined = mc.union(box1, box2)
     """
 
+
 def subtract(base: Geometry, *tools: Geometry) -> Geometry:
     """Subtract tool geometries from base (logical difference).
 
@@ -288,6 +299,7 @@ def subtract(base: Geometry, *tools: Geometry) -> Geometry:
         >>> cyl = mc.cylinder(3, 15)
         >>> result = mc.subtract(box, cyl)
     """
+
 
 def intersect(*geoms: Geometry) -> Geometry:
     """Intersect geometries (logical AND).
@@ -323,6 +335,7 @@ def fillet(
         >>> rounded = mc.fillet(box, 1.0)
     """
 
+
 def chamfer(
     geom: Geometry,
     distance: float,
@@ -339,6 +352,7 @@ def chamfer(
         Chamfered geometry
     """
 
+
 def shell(
     geom: Solid,
     thickness: float,
@@ -354,6 +368,7 @@ def shell(
     Returns:
         Hollowed solid
     """
+
 
 def offset(
     geom: Geometry,
@@ -395,6 +410,7 @@ def extrude(
         >>> cylinder = mc.extrude(circle, 10)
     """
 
+
 def revolve(
     face: Face,
     angle: float = 360,
@@ -415,6 +431,7 @@ def revolve(
         >>> bottle = mc.revolve(profile, 360)
     """
 
+
 def loft(
     faces: list[Face],
     ruled: bool = False,
@@ -428,6 +445,7 @@ def loft(
     Returns:
         Lofted solid
     """
+
 
 def sweep(
     face: Face,
@@ -459,6 +477,7 @@ class Selector:
     def group_by(self, key: str | Callable) -> dict[Any, list[Geometry]]:
         """Group elements by key."""
 
+
 def select_faces(
     geom: Geometry,
     selector: str | Callable | None = None,
@@ -477,11 +496,13 @@ def select_faces(
         >>> top_faces = mc.select_faces(box, ">Z")
     """
 
+
 def select_edges(
     geom: Geometry,
     selector: str | Callable | None = None,
 ) -> list[Edge]:
     """Select edges from geometry."""
+
 
 def select_vertices(
     geom: Geometry,
@@ -512,6 +533,7 @@ def screw(
         Screw solid
     """
 
+
 def gear(
     num_teeth: int,
     module: float,
@@ -530,6 +552,7 @@ def gear(
         Gear solid
     """
 
+
 def bearing(
     inner_diameter: float,
     outer_diameter: float,
@@ -546,6 +569,7 @@ def bearing(
         Bearing solid
     """
 
+
 # Standard profiles
 def i_beam(
     height: float,
@@ -554,6 +578,7 @@ def i_beam(
     flange_thickness: float,
 ) -> Face:
     """Create an I-beam profile."""
+
 
 def channel(
     height: float,
@@ -633,6 +658,7 @@ def export_step(geom: Geometry, filename: str) -> None:
         >>> mc.export_step(box, "box.step")
     """
 
+
 def export_stl(
     geom: Geometry,
     filename: str,
@@ -647,6 +673,7 @@ def export_stl(
         linear_deflection: Linear mesh deflection
         angular_deflection: Angular mesh deflection in degrees
     """
+
 
 def export_svg(
     geom: Geometry,
@@ -665,6 +692,7 @@ def export_svg(
         height: Image height
     """
 
+
 def import_step(filename: str) -> Geometry:
     """Import geometry from STEP format.
 
@@ -674,6 +702,7 @@ def import_step(filename: str) -> Geometry:
     Returns:
         Imported geometry
     """
+
 
 def import_stl(filename: str) -> Geometry:
     """Import geometry from STL format.
@@ -711,6 +740,7 @@ def viewer(
         >>> mc.viewer(box)
     """
 
+
 class GeometryCard:
     """Marimo UI card displaying geometry properties."""
 
@@ -723,6 +753,7 @@ class GeometryCard:
 
     def render(self) -> mo.Html:
         """Render the card."""
+
 
 def parametric_model(
     func: Callable,
@@ -754,6 +785,7 @@ def parametric_model(
 ```python
 from typing import Protocol, Union
 
+
 class Geometry(Protocol):
     """Base protocol for all geometry types."""
 
@@ -769,6 +801,7 @@ class Geometry(Protocol):
     def area(self) -> float:
         """Get surface area."""
 
+
 class Solid(Geometry):
     """3D solid geometry."""
 
@@ -781,6 +814,7 @@ class Solid(Geometry):
     def vertices(self) -> list[Vertex]:
         """Get all vertices."""
 
+
 class Face(Geometry):
     """2D surface geometry."""
 
@@ -789,6 +823,7 @@ class Face(Geometry):
 
     def normal(self) -> tuple[float, float, float]:
         """Get surface normal."""
+
 
 class Edge(Geometry):
     """1D curve geometry."""
@@ -799,11 +834,13 @@ class Edge(Geometry):
     def length(self) -> float:
         """Get edge length."""
 
+
 class Vertex(Geometry):
     """0D point geometry."""
 
     def position(self) -> tuple[float, float, float]:
         """Get vertex position."""
+
 
 class Wire(Geometry):
     """Connected sequence of edges."""
@@ -828,9 +865,11 @@ length = mo.ui.slider(5, 50, value=20, label="Length")
 width = mo.ui.slider(5, 50, value=15, label="Width")
 height = mo.ui.slider(5, 30, value=10, label="Height")
 
+
 # Create geometry reactively
 def create_box():
     return mc.box(length.value, width.value, height.value)
+
 
 box = create_box()
 
@@ -933,10 +972,12 @@ All geometry creation and modification functions work seamlessly with Marimo's r
 import marimo as mo
 import marimocad as mc
 
+
 # When slider changes, geometry updates automatically
 @mo.reactive
 def box_model(length, width, height):
     return mc.box(length, width, height)
+
 
 # Create reactive UI
 length_slider = mo.ui.slider(1, 50, value=10)
@@ -959,14 +1000,18 @@ All API functions use descriptive exceptions:
 class MarimoCADError(Exception):
     """Base exception for marimocad errors."""
 
+
 class GeometryError(MarimoCADError):
     """Raised for invalid geometry operations."""
+
 
 class ExportError(MarimoCADError):
     """Raised for export failures."""
 
+
 class ImportError(MarimoCADError):
     """Raised for import failures."""
+
 
 class ConstraintError(MarimoCADError):
     """Raised for constraint solving failures."""
