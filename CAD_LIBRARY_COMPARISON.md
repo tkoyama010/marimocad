@@ -41,12 +41,7 @@ This document evaluates three Python CAD libraries for integration with Marimo: 
 
 **Example:**
 ```python
-result = (cq.Workplane("XY")
-    .box(20, 20, 5)
-    .faces(">Z")
-    .workplane()
-    .hole(5)
-)
+result = cq.Workplane("XY").box(20, 20, 5).faces(">Z").workplane().hole(5)
 ```
 
 #### Build123d ⭐⭐⭐⭐⭐
@@ -88,6 +83,7 @@ with BuildPart() as p:
 ```python
 from OCP.BRepPrimAPI import BRepPrimAPI_MakeBox
 from OCP.BRepAlgoAPI import BRepAlgoAPI_Cut
+
 box = BRepPrimAPI_MakeBox(10, 10, 10).Shape()
 cyl = BRepPrimAPI_MakeCylinder(2.5, 20).Shape()
 cut_op = BRepAlgoAPI_Cut(box, cyl)
@@ -135,6 +131,7 @@ result = cut_op.Shape()
 import marimo as mo
 import cadquery as cq
 
+
 @mo.reactive
 def create_box(length, width, height):
     return cq.Workplane("XY").box(length, width, height)
@@ -155,6 +152,7 @@ def create_box(length, width, height):
 ```python
 import marimo as mo
 from build123d import *
+
 
 @mo.reactive
 def create_box(length, width, height):
@@ -178,9 +176,12 @@ def create_box(length, width, height):
 import marimo as mo
 from OCP.BRepPrimAPI import BRepPrimAPI_MakeBox
 
+
 @mo.reactive
 def create_box(length, width, height):
     return BRepPrimAPI_MakeBox(length, width, height).Shape()
+
+
 # Requires custom renderer
 ```
 
