@@ -98,12 +98,7 @@ rotated = mc.rotate(box, angle=45, axis="Z")
 rotated_custom = mc.rotate(box, angle=30, axis=(1, 1, 0))
 
 # Rotate around a specific point
-rotated_centered = mc.rotate(
-    box,
-    angle=45,
-    axis="Z",
-    center=(10, 5, 2.5)
-)
+rotated_centered = mc.rotate(box, angle=45, axis="Z", center=(10, 5, 2.5))
 ```
 
 ### Scaling
@@ -247,10 +242,7 @@ extruded = mc.extrude(profile, distance=15, direction=(1, 0, 1))
 
 ```python
 # Revolve profile to create bottle
-profile = mc.polygon([
-    (0, 0), (5, 0), (5, 10), (3, 12),
-    (3, 15), (4, 18), (4, 20), (0, 20)
-])
+profile = mc.polygon([(0, 0), (5, 0), (5, 10), (3, 12), (3, 15), (4, 18), (4, 20), (0, 20)])
 
 bottle = mc.revolve(profile, angle=360, axis="Z")
 
@@ -331,7 +323,7 @@ mechanism.add_constraint(
     constraint_type="distance",
     part1="gear1",
     part2="gear2",
-    distance=60  # Center distance for meshing gears
+    distance=60,  # Center distance for meshing gears
 )
 
 # Solve constraints
@@ -344,49 +336,26 @@ mechanism.solve()
 
 ```python
 # M8 screw
-screw = mc.screw(
-    diameter=8,
-    length=30,
-    thread_pitch=1.25,
-    head_type="hex"
-)
+screw = mc.screw(diameter=8, length=30, thread_pitch=1.25, head_type="hex")
 
 # Spur gear
-gear = mc.gear(
-    num_teeth=30,
-    module=2.5,
-    thickness=10,
-    pressure_angle=20
-)
+gear = mc.gear(num_teeth=30, module=2.5, thickness=10, pressure_angle=20)
 
 # Ball bearing
-bearing = mc.bearing(
-    inner_diameter=8,
-    outer_diameter=22,
-    thickness=7
-)
+bearing = mc.bearing(inner_diameter=8, outer_diameter=22, thickness=7)
 ```
 
 ### Structural Profiles
 
 ```python
 # I-beam profile
-i_beam_profile = mc.i_beam(
-    height=200,
-    width=150,
-    web_thickness=10,
-    flange_thickness=15
-)
+i_beam_profile = mc.i_beam(height=200, width=150, web_thickness=10, flange_thickness=15)
 
 # Extrude to create beam
 beam = mc.extrude(i_beam_profile, distance=1000)
 
 # Channel profile
-channel_profile = mc.channel(
-    height=100,
-    width=50,
-    thickness=5
-)
+channel_profile = mc.channel(height=100, width=50, thickness=5)
 channel = mc.extrude(channel_profile, distance=500)
 ```
 
@@ -430,10 +399,7 @@ mo.vstack([box_size, hole_diameter, fillet_radius])
 box = mc.box(box_size.value, box_size.value, box_size.value / 2)
 
 # Add hole
-hole = mc.cylinder(
-    radius=hole_diameter.value / 2,
-    height=box_size.value
-)
+hole = mc.cylinder(radius=hole_diameter.value / 2, height=box_size.value)
 hole = mc.translate(hole, x=box_size.value / 2, y=box_size.value / 2)
 
 result = mc.subtract(box, hole)
@@ -460,17 +426,9 @@ module = mo.ui.slider(start=1, stop=5, value=2, label="Module")
 mo.vstack([teeth1, teeth2, module])
 
 # Create gears
-gear1 = mc.gear(
-    num_teeth=int(teeth1.value),
-    module=module.value,
-    thickness=5
-)
+gear1 = mc.gear(num_teeth=int(teeth1.value), module=module.value, thickness=5)
 
-gear2 = mc.gear(
-    num_teeth=int(teeth2.value),
-    module=module.value,
-    thickness=5
-)
+gear2 = mc.gear(num_teeth=int(teeth2.value), module=module.value, thickness=5)
 
 # Calculate center distance for meshing
 center_distance = (teeth1.value + teeth2.value) * module.value / 2
@@ -488,6 +446,7 @@ mc.viewer(gears)
 import marimo as mo
 import marimocad as mc
 
+
 def create_bottle(height, radius, neck_radius, neck_height):
     """Create a parametric bottle."""
     # Body
@@ -498,6 +457,7 @@ def create_bottle(height, radius, neck_radius, neck_height):
     neck = mc.translate(neck, z=height - neck_height)
 
     return mc.union(body, neck)
+
 
 # Create UI
 params = {
@@ -526,12 +486,7 @@ box = mc.fillet(box, radius=2.0)
 mc.export_step(box, "part.step")
 
 # Export to STL for 3D printing
-mc.export_stl(
-    box,
-    "part.stl",
-    linear_deflection=0.1,
-    angular_deflection=0.5
-)
+mc.export_stl(box, "part.stl", linear_deflection=0.1, angular_deflection=0.5)
 
 # Export to SVG (2D projection)
 mc.export_svg(box, "part_top.svg", view="top")
@@ -562,6 +517,7 @@ mc.export_step(modified, "modified.step")
 
 ```python
 import marimocad as mc
+
 
 def create_bracket(
     base_length: float = 50,
@@ -596,10 +552,7 @@ def create_bracket(
     wall_hole = mc.cylinder(radius=hole_diameter / 2, height=wall_thickness * 2)
     wall_hole = mc.rotate(wall_hole, angle=90, axis="Y")
     wall_hole = mc.translate(
-        wall_hole,
-        x=-wall_thickness / 2,
-        y=base_width / 2,
-        z=base_height + wall_height / 2
+        wall_hole, x=-wall_thickness / 2, y=base_width / 2, z=base_height + wall_height / 2
     )
 
     bracket = mc.subtract(bracket, wall_hole)
@@ -608,6 +561,7 @@ def create_bracket(
     bracket = mc.fillet(bracket, radius=fillet_radius)
 
     return bracket
+
 
 # Create bracket
 bracket = create_bracket()
@@ -621,6 +575,7 @@ mc.export_step(bracket, "bracket.step")
 
 ```python
 import marimocad as mc
+
 
 def create_enclosure(
     length: float = 100,
@@ -639,16 +594,9 @@ def create_enclosure(
 
     # Create cavity
     cavity = mc.box(
-        length - 2 * wall_thickness,
-        width - 2 * wall_thickness,
-        height - wall_thickness
+        length - 2 * wall_thickness, width - 2 * wall_thickness, height - wall_thickness
     )
-    cavity = mc.translate(
-        cavity,
-        x=wall_thickness,
-        y=wall_thickness,
-        z=wall_thickness
-    )
+    cavity = mc.translate(cavity, x=wall_thickness, y=wall_thickness, z=wall_thickness)
 
     # Shell it
     enclosure = mc.subtract(outer, cavity)
@@ -670,6 +618,7 @@ def create_enclosure(
 
     return enclosure
 
+
 # Create enclosure
 enclosure = create_enclosure()
 mc.viewer(enclosure)
@@ -679,6 +628,7 @@ mc.viewer(enclosure)
 
 ```python
 import marimocad as mc
+
 
 def create_gearbox():
     """Create a simple gearbox assembly."""
@@ -712,6 +662,7 @@ def create_gearbox():
     assembly = mc.union(housing, gear1, gear2, shaft1, shaft2)
 
     return assembly
+
 
 # Create and display
 gearbox = create_gearbox()
