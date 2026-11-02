@@ -17,6 +17,7 @@ marimocad uses a Protocol-based type system that provides:
 ```python
 from typing import Protocol, runtime_checkable
 
+
 @runtime_checkable
 class Geometry(Protocol):
     """Base protocol for all geometric entities.
@@ -326,6 +327,7 @@ class Wire(Geometry, Protocol):
 from dataclasses import dataclass
 from typing import Any
 
+
 @dataclass
 class Part:
     """A part in an assembly with position and metadata.
@@ -379,17 +381,19 @@ class Part:
 ```python
 from enum import Enum
 
+
 class ConstraintType(Enum):
     """Types of assembly constraints."""
 
-    MATE = "mate"                # Face-to-face contact
-    ALIGN = "align"              # Align axes or planes
-    DISTANCE = "distance"        # Fixed distance between entities
-    ANGLE = "angle"              # Fixed angle between entities
-    PARALLEL = "parallel"        # Keep entities parallel
+    MATE = "mate"  # Face-to-face contact
+    ALIGN = "align"  # Align axes or planes
+    DISTANCE = "distance"  # Fixed distance between entities
+    ANGLE = "angle"  # Fixed angle between entities
+    PARALLEL = "parallel"  # Keep entities parallel
     PERPENDICULAR = "perpendicular"  # Keep entities perpendicular
-    CONCENTRIC = "concentric"    # Share same axis
-    TANGENT = "tangent"          # Tangent contact
+    CONCENTRIC = "concentric"  # Share same axis
+    TANGENT = "tangent"  # Tangent contact
+
 
 @dataclass
 class Constraint:
@@ -575,6 +579,7 @@ from typing import Callable, TypeVar
 
 T = TypeVar("T", bound=Geometry)
 
+
 class Selector:
     """Base class for geometry element selection.
 
@@ -676,6 +681,7 @@ class Selector:
 ```python
 from typing import Hashable
 
+
 @dataclass(frozen=True)
 class CacheKey:
     """Key for geometry cache.
@@ -710,10 +716,7 @@ class CacheKey:
         # Convert args and kwargs to hashable tuple
         params = []
         params.extend(cls._make_hashable(arg) for arg in args)
-        params.extend(
-            (k, cls._make_hashable(v))
-            for k, v in sorted(kwargs.items())
-        )
+        params.extend((k, cls._make_hashable(v)) for k, v in sorted(kwargs.items()))
         return cls(operation=operation, parameters=tuple(params))
 
     @staticmethod
@@ -724,10 +727,7 @@ class CacheKey:
         if isinstance(value, (list, tuple)):
             return tuple(CacheKey._make_hashable(v) for v in value)
         if isinstance(value, dict):
-            return tuple(
-                (k, CacheKey._make_hashable(v))
-                for k, v in sorted(value.items())
-            )
+            return tuple((k, CacheKey._make_hashable(v)) for k, v in sorted(value.items()))
         # For geometry objects, use id
         return id(value)
 ```
@@ -736,6 +736,7 @@ class CacheKey:
 
 ```python
 from typing import Generic
+
 
 class GeometryCache(Generic[T]):
     """LRU cache for geometry objects.
@@ -803,6 +804,7 @@ class GeometryCache(Generic[T]):
 
 ```python
 from enum import Enum
+
 
 class ExportFormat(Enum):
     """Supported export formats."""
