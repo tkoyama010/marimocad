@@ -175,12 +175,7 @@ with BuildPart() as my_box:
     Box(10, 10, 10)
 
 # Create 3D figure
-fig = create_plotly_figure(
-    my_box.part,
-    color='lightblue',
-    title='My Box',
-    show_edges=False
-)
+fig = create_plotly_figure(my_box.part, color="lightblue", title="My Box", show_edges=False)
 
 # Display in marimo
 mo.ui.plotly(fig)
