@@ -163,14 +163,18 @@ This document describes the architecture of marimocad, a CAD library designed fo
 class Geometry(Protocol):
     """Base geometry interface."""
 
+
 class Solid(Geometry):
     """3D solid geometry."""
+
 
 class Face(Geometry):
     """2D surface geometry."""
 
+
 class Edge(Geometry):
     """1D curve geometry."""
+
 
 class Vertex(Geometry):
     """0D point geometry."""
@@ -206,6 +210,7 @@ class Build123dBackend:
     def create_box(self, length, width, height, center):
         """Create box using Build123d."""
         from build123d import Box, BuildPart
+
         with BuildPart() as part:
             Box(length, width, height)
         return self._wrap(part.part)
@@ -229,6 +234,7 @@ class CadQueryBackend:
     def create_box(self, length, width, height, center):
         """Create box using CadQuery."""
         import cadquery as cq
+
         workplane = cq.Workplane("XY")
         box = workplane.box(length, width, height, centered=center)
         return self._wrap(box)
